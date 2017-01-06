@@ -1,0 +1,15 @@
+{
+  "name": "pol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --harmony-async-await app.js",
+    "test": "echo setup tests"
+  },
+  "author": "jacobmoe@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.0.0"
+  }
+}
