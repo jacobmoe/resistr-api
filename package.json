@@ -4,12 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony-async-await app.js",
+    "start": "DEBUG=koa* node --harmony-async-await server.js",
     "test": "echo setup tests"
   },
   "author": "jacobmoe@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.0.0"
+    "koa": "2.0.0",
+    "koa-mount": "2.0.0",
+    "koa-route": "3.0.0"
   }
 }

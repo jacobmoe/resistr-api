@@ -1,14 +1,26 @@
-const Koa = require('koa');
+const Koa = require('koa')
+const router = require('koa-route')
 
 const app = new Koa();
+
+app.use(router.get('/', function (ctx, next) {
+  ctx.body = 'root :(';
+}))
+
+app.use(router.get('/test', function (ctx, next) {
+  ctx.body = 'test :D';
+}))
+
+require('./routes')(app)
+
 
 function requestLogger(format) {
   format = format || ':method ":url"';
 
   return async function (ctx, next) {
     const str = format
-      .replace(':method', ctx.method)
-      .replace(':url', ctx.url);
+          .replace(':method', ctx.method)
+          .replace(':url', ctx.url);
 
     console.log(str);
 
@@ -24,11 +36,6 @@ app.use(async (ctx, next) => {
     ctx.status = err.status || 500;
   }
 });
-
-app.use(async (ctx, next) => {
-  await next();
-  ctx.body = 'Hello World'
-})
 
 app.use(requestLogger());
 
