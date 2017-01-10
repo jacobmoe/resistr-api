@@ -1,3 +1,3 @@
 export NODE_ENV=development
 
-source ./secrets.sh
+source ./env/common.sh
