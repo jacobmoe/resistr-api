@@ -1,3 +1,5 @@
 .DS_Store
 node_modules/
 restclient.http
+npm-debug.log
+env/secrets.sh
