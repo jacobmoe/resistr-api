@@ -1,15 +1,17 @@
 const Koa = require('koa')
-const router = require('koa-route')
+const router = new require('koa-router')()
 
 const app = new Koa();
 
-app.use(router.get('/', function (ctx, next) {
+router.get('/', function (ctx, next) {
   ctx.body = 'root :(';
-}))
+})
 
-app.use(router.get('/test', function (ctx, next) {
+router.get('/test', function (ctx, next) {
   ctx.body = 'test :D';
-}))
+})
+
+app.use(router.routes()).use(router.allowedMethods())
 
 require('./routes')(app)
 

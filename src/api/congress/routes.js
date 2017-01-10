@@ -1,5 +1,5 @@
 const Koa = require('koa')
-const router = require('koa-route');
+const router = new require('koa-router')();
 
 const app = new Koa()
 
@@ -10,6 +10,9 @@ function senate () {
   }
 }
 
-app.use(router.get('/senate', senate()))
+router.get('/senate', senate())
+
+app.use(router.routes()).use(router.allowedMethods())
+
 
 module.exports = app
