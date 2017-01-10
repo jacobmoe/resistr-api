@@ -24,8 +24,6 @@ function requestLogger(format) {
           .replace(':method', ctx.method)
           .replace(':url', ctx.url);
 
-    console.log(str);
-
     await next();
   };
 }

@@ -3,7 +3,6 @@ function request (opts) {
 
   return new Promise((resolve, reject) => {
     require('request')(opts, function (err, res) {
-      console.log("00000")
       if (err) {
         reject(err)
       } else {

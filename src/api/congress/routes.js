@@ -1,21 +1,13 @@
 const Koa = require('koa')
 const Router = require('koa-router')
-const config = require('config')
-const utils = require('../lib/utils')
+const propublica = require('./sources/propublica')
 
 const app = new Koa()
 const router = new Router()
 
 function house () {
   return async function (ctx) {
-    const result = await utils.request({
-      method: "GET",
-      url: "https://api.propublica.org/congress/v1/114/house/members.json",
-      headers: {
-        'X-API-Key': config.get('propublicaApiKey')
-      }
-    })
-
+    const result = await propublica.congress.house.members()
     ctx.body = result.body
   }
 }
