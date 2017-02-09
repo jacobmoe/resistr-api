@@ -1,1 +1,1 @@
-require('./src/api/server')
+require('./src/server')
