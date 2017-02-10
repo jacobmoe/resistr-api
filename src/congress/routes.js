@@ -2,6 +2,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const propublica = require('./sources/propublica')
 const sunlight = require('./sources/sunlight')
+const districts = require('./districts/routes')
 
 const app = new Koa()
 const router = new Router()
@@ -23,6 +24,7 @@ function legislators () {
 
 router.get('/house', house())
 router.get('/legislators', legislators())
+router.use('/districts', districts.routes(), districts.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())
 
