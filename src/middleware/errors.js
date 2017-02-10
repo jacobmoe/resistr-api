@@ -4,10 +4,10 @@ module.exports = function() {
       await next()
     } else {
       try {
-        await next();
+        await next()
       } catch (err) {
-        ctx.body = { message: err.message };
-        ctx.status = err.status || 500;
+        ctx.body = { message: err.message }
+        ctx.status = err.status || 500
       }
     }
   }
