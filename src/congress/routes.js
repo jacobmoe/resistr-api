@@ -1,18 +1,11 @@
 const Koa = require('koa')
 const Router = require('koa-router')
-const propublica = require('./sources/propublica')
 const sunlight = require('./sources/sunlight')
-const districts = require('./districts/routes')
+const house = require('./house/routes')
+const senate = require('./senate/routes')
 
 const app = new Koa()
 const router = new Router()
-
-function house () {
-  return async function (ctx) {
-    const result = await propublica.congress.house.members()
-    ctx.body = result.body
-  }
-}
 
 function legislators () {
   return async function (ctx) {
@@ -22,10 +15,12 @@ function legislators () {
   }
 }
 
-router.get('/house', house())
 router.get('/legislators', legislators())
-router.use('/districts', districts.routes(), districts.allowedMethods())
+router.use('/house', house.routes(), house.allowedMethods())
+router.use('/senate', senate.routes(), senate.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())
+
+console.log("API/CONGRESS ROUTES\n", router.stack.map(i => i.path).join("\n"))
 
 module.exports = app
