@@ -1,3 +1,5 @@
+const usImages = require('./sources/unitedstatesImages')
+
 const structure = {
   bioguide_id: 'bioguideId',
   birthday: 'birthday',
@@ -42,6 +44,24 @@ function build (data) {
   }, {})
 }
 
+function all (results) {
+  return Promise.all((results).map((result) => {
+    const member = build(result)
+    const uid = member.bioguideId
+    member.imageUrl = null
+
+    return usImages.memberImageAvailable(uid)
+      .then((imageIsAvailable) => {
+        if (imageIsAvailable) {
+          member.imageUrl = usImages.memberImageUrl(uid)
+        }
+
+        return member
+      })
+  }))
+}
+
 module.exports = {
-  build
+  build,
+  all
 }

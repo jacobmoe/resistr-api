@@ -3,13 +3,18 @@ const { request } = require('../../lib/utils')
 const domain = 'https://theunitedstates.io'
 const size = '225x275'
 
-function memberImage (uid) {
-  return request({
-    method: "GET",
-    url: domain + '/images/congress/' + size + '/' + uid + '.jpg'
-  })
+function memberImageUrl (uid) {
+  return domain + '/images/congress/' + size + '/' + uid + '.jpg'
+}
+
+function memberImageAvailable (uid) {
+  const url = memberImageUrl(uid)
+
+  return request({method: "HEAD", url: url})
+    .then((res) => {return res.statusCode === 200})
 }
 
 module.exports = {
-  memberImage
+  memberImageAvailable,
+  memberImageUrl
 }

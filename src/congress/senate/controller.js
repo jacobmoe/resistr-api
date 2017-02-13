@@ -1,4 +1,5 @@
 const sunlight = require('../sources/sunlight')
+const memberBuilder = require('../memberBuilder')
 
 // should return all senators
 function index () {
@@ -11,13 +12,16 @@ function index () {
 
 function members () {
   return async function (ctx) {
-    const senators = await sunlight.members({
+    const senatorResponse = await sunlight.members({
       state: ctx.params.state.toUpperCase(),
       chamber: 'senate'
     })
 
+    const body = JSON.parse(senatorResponse.body)
+    body.results = await memberBuilder.all(body.results || [])
+
     ctx.status = 200
-    ctx.body = senators.body
+    ctx.body = body
   }
 }
 

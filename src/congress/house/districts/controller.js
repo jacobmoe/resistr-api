@@ -1,5 +1,5 @@
 const sunlight = require('../../sources/sunlight')
-const usImages = require('../../sources/unitedstatesImages')
+const memberBuilder = require('../../memberBuilder')
 
 function index () {
   return async function (ctx) {
@@ -20,8 +20,11 @@ function members () {
       chamber: 'house'
     })
 
+    const body = JSON.parse(memberResponse.body)
+    body.results = await memberBuilder.all(body.results || [])
+
     ctx.status = 200
-    ctx.body = memberResponse.body
+    ctx.body = body
   }
 }
 
