@@ -1,4 +1,5 @@
 const sunlight = require('../../sources/sunlight')
+const usImages = require('../../sources/unitedstatesImages')
 
 function index () {
   return async function (ctx) {
@@ -13,14 +14,14 @@ function index () {
 
 function members () {
   return async function (ctx) {
-    const reps = await sunlight.members({
+    const memberResponse = await sunlight.members({
       state: ctx.params.state.toUpperCase(),
       district: ctx.params.district,
       chamber: 'house'
     })
 
     ctx.status = 200
-    ctx.body = reps.body
+    ctx.body = memberResponse.body
   }
 }
 

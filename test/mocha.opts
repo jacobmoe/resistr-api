@@ -1,0 +1,4 @@
+test
+--require test/setup.js
+--reporter spec
+--recursive
