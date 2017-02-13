@@ -11,7 +11,7 @@ function index () {
 
 function members () {
   return async function (ctx) {
-    const senators = await sunlight.districtMembers({
+    const senators = await sunlight.members({
       state: ctx.params.state.toUpperCase(),
       chamber: 'senate'
     })

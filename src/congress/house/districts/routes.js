@@ -5,6 +5,10 @@ const controller = require('./controller')
 const router = new Router()
 
 router.get('/', controller.index())
-router.get('/:district/members', middleware.processParams(), controller.members())
+router.get(
+  '/:district/members',
+  middleware.processParams(),
+  controller.members()
+)
 
 module.exports = router

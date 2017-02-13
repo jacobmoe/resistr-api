@@ -2,20 +2,15 @@ const { request } = require('../../lib/utils')
 
 const domain = 'https://congress.api.sunlightfoundation.com'
 
-function legislators (opts) {
-  if (typeof opts !== 'object') {
-    opts = { zip: opts }
+function districts (filter) {
+  const params = {}
+
+  if (typeof filter === 'object') {
+    params.latitude = filter.lat
+    params.longitude = filter.lon
+  } else {
+    params.zip = filter
   }
-
-  return request({
-    method: "GET",
-    url: domain+"/legislators/locate",
-    qs: opts
-  })
-}
-
-function districts (zip) {
-  const params = zip ? {zip: zip} : {}
 
   return request({
     method: "GET",
@@ -24,7 +19,7 @@ function districts (zip) {
   })
 }
 
-function districtMembers (params) {
+function members (params) {
   return request({
     method: "GET",
     url: domain+"/legislators",
@@ -33,7 +28,6 @@ function districtMembers (params) {
 }
 
 module.exports = {
-  legislators,
   districts,
-  districtMembers
+  members
 }
