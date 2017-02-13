@@ -1,3 +1,4 @@
 {
-  "propublicaApiKey": "PROPUBLICA_API_KEY"
+  "propublicaApiKey": "PROPUBLICA_API_KEY",
+  "mapzenApiKey": "MAPZEN_API_KEY"
 }
