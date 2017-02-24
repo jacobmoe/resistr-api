@@ -13,5 +13,5 @@ function request (opts) {
 }
 
 module.exports = {
-  request: request
+  request
 }

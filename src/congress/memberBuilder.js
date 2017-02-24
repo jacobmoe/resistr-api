@@ -39,7 +39,7 @@ const structure = {
 
 function build (data) {
   return Object.keys(data).reduce((acc, key) => {
-    acc[structure[key]] = data[key]
+    if (structure[key]) acc[structure[key]] = data[key]
     return acc
   }, {})
 }
@@ -47,6 +47,7 @@ function build (data) {
 function all (results) {
   return Promise.all((results).map((result) => {
     const member = build(result)
+    member.name = member.firstName + ' ' + member.lastName
     const uid = member.bioguideId
     member.imageUrl = null
 
