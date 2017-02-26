@@ -2,9 +2,9 @@
   "corsWhitelist": [
     "http://localhost:8080"
   ],
-  "database": {
+  "dbConnection": {
     "host": "127.0.0.1",
-    "name": "resistr_dev",
+    "database": "resistr_development",
     "user": "postgres",
     "password": ""
   }

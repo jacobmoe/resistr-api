@@ -1,7 +1,7 @@
 {
-  "database": {
+  "dbConnection": {
     "host": "127.0.0.1",
-    "name": "resistr_test",
+    "database": "resistr_test",
     "user": "postgres",
     "password": ""
   }

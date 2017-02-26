@@ -48,7 +48,6 @@ describe('memberBuilder', () => {
       birthday: "1950-11-23",
       chamber: "senate",
       contact: "https://www.schumer.senate.gov/contact/email-chuck",
-      undefined: 14858,
       district: null,
       facebookId: "15771239406",
       fax: "202-228-3027",

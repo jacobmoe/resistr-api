@@ -1,7 +1,7 @@
 {
-  "database": {
+  "dbConnection": {
     "host": "db-host",
-    "name": "db-name",
+    "database": "db-name",
     "user": "db-user",
     "password": "db-password"
   }
