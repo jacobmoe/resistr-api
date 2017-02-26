@@ -1,5 +1,11 @@
 {
   "propublicaApiKey": "PROPUBLICA_API_KEY",
   "mapzenApiKey": "MAPZEN_API_KEY",
-  "googleApiKey": "GOOGLE_API_KEY"
+  "googleApiKey": "GOOGLE_API_KEY",
+  "database": {
+    "host": "DATABASE_HOST",
+    "name": "DATABASE_NAME",
+    "user": "DATABASE_USER",
+    "password": "DATABASE_PASSWORD"
+  }
 }

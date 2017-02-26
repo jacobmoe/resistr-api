@@ -20,7 +20,7 @@ function hydrateDivisions(divisions, data) {
 }
 
 function hydrateDivision(division, data) {
-  return division.officeIndices.map((index) => {
+  return (division.officeIndices || []).map((index) => {
     return data.offices[index]
   })
 }
