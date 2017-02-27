@@ -8,11 +8,11 @@ class Model {
   }
 
   static count () {
-    return this.getOrm().count()
+    return this.orm().count()
   }
 
   static find (id) {
-    return this.getOrm().find(id)
+    return this.orm().find(id)
       .then((res) => (new this(res)))
   }
 
@@ -24,14 +24,14 @@ class Model {
       params.createdAt = new Date()
       params.updatedAt = new Date()
 
-      return this.getOrm().create(params)
+      return this.orm().create(params)
         .then((res) => { return new this(res) })
     } else {
       return Promise.reject(errors)
     }
   }
 
-  static getOrm () {
+  static orm () {
     if (this.constructor._orm) {
       return this.constructor._orm
     } else {
@@ -45,7 +45,7 @@ class Model {
   update (params) {
     params.updatedAt = new Date()
 
-    return this.constructor.getOrm().update(this.id, params)
+    return this.constructor.orm().update(this.id, params)
       .then((res) => (new this.constructor(res)))
   }
 
@@ -58,7 +58,7 @@ class Model {
   }
 
   del () {
-    return this.constructor.getOrm().del(this.id)
+    return this.constructor.orm().del(this.id)
       .then((res) => (new this.constructor(res)))
   }
 
