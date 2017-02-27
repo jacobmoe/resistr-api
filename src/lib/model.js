@@ -6,9 +6,20 @@ class Model {
   }
 
   static find (id) {
+    return this.constructor._orm.find(id)
+      .then((res) => (new this.constructor(res)))
   }
 
-  static create (id) {
+  static create (params) {
+    const obj = new this.constructor(params)
+    const errors = obj.validationErrors()
+
+    if (errors.length === 0) {
+      return this.constructor._orm.create(params)
+        .then((res) => { return new this.constructor(res) })
+    } else {
+      return Promise.reject(errors)
+    }
   }
 
   save () {
@@ -42,5 +53,6 @@ class Model {
 Model.tableName = null
 Model.fields = []
 Model.validations = {}
+Model._orm = null
 
 module.exports = Model

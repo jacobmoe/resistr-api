@@ -8,14 +8,16 @@ module.exports = (tableInfo) => {
           return value === key
         })
 
-        if (params[key]) acc[attrName] = params[key]
+        if (attrName) acc[attrName] = params[key]
 
         return acc
       }, {})
     },
     forRecord: (params) => {
       return Object.keys(params).reduce((acc, key) => {
-        acc[tableInfo.columns[key]] = params[key]
+        if (tableInfo.columns[key]) {
+          acc[tableInfo.columns[key]] = params[key]
+        }
 
         return acc
       }, {})

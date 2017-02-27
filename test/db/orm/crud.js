@@ -77,6 +77,14 @@ describe('db/orm/crud', () => {
   })
 
   describe('find', () => {
+    beforeEach((done) => {
+      truncate('users').then(() => done())
+    })
+
+    afterEach((done) => {
+      truncate('users').then(() => done())
+    })
+
     it('returns fetches a record by id', (done) => {
       const crudTable = crud(table)
 
@@ -87,6 +95,54 @@ describe('db/orm/crud', () => {
           assert.equal(res.name, params.name)
         })
         .then(() => done())
+    })
+  })
+
+  describe('update', () => {
+    beforeEach((done) => {
+      truncate('users').then(() => done())
+    })
+
+    afterEach((done) => {
+      truncate('users').then(() => done())
+    })
+
+    it('updates a record', (done) => {
+      const crudTable = crud(table)
+      const newParams = {name: 'bill'}
+      let id
+
+      crudTable.create(params)
+        .then((res) => { return id = res.id })
+        .then(id => {return crudTable.update(id, newParams)})
+        .then(affectedRows => { assert.equal(affectedRows, 1) })
+        .then(() => {return crudTable.find(id)})
+        .then(res => { assert.equal(res.name, 'bill') })
+        .then(() => done())
+    })
+
+    describe('del', () => {
+      beforeEach((done) => {
+        truncate('users').then(() => done())
+      })
+
+      afterEach((done) => {
+        truncate('users').then(() => done())
+      })
+
+      it('deletes a record', (done) => {
+        const crudTable = crud(table)
+        let id
+
+        crudTable.create(params)
+          .then((res) => { id = res.id })
+          .then(() => { return crudTable.count() })
+          .then((count) => {assert.equal(count, 1)})
+          .then(() => {return crudTable.del(id)})
+          .then(() => { return crudTable.count() })
+          .then((count) => {assert.equal(count, 0)})
+          .then(() => done())
+      })
     })
   })
 })
