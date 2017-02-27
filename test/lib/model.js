@@ -3,7 +3,7 @@ const { assert } = require('chai')
 const Model = require('../../src/lib/model')
 const { truncate } = require('../helpers')
 
-describe('lib/Model', () => {
+describe('lib/model', () => {
   afterEach((done) => {
     truncate('users').then(() => done())
   })
