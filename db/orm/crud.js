@@ -44,6 +44,12 @@ module.exports = (tableInfo) => {
     update: (id, params) => {
       delete params.id
       return queries.update(id, transform.forRecord(params))
+        .then(() => {
+          return queries.find(id)
+        })
+        .then((res) => {
+          return transform.forObject(res[0])
+        })
     },
     del: (id) => {
       return queries.del(id)

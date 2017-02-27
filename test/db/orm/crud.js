@@ -115,8 +115,6 @@ describe('db/orm/crud', () => {
       crudTable.create(params)
         .then((res) => { return id = res.id })
         .then(id => {return crudTable.update(id, newParams)})
-        .then(affectedRows => { assert.equal(affectedRows, 1) })
-        .then(() => {return crudTable.find(id)})
         .then(res => { assert.equal(res.name, 'bill') })
         .then(() => done())
     })

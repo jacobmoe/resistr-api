@@ -1,3 +1,5 @@
+const ormPath = '../../db/orm'
+
 class Model {
   constructor(params) {
     Object.keys(params).forEach((key) => {
@@ -5,30 +7,59 @@ class Model {
     })
   }
 
+  static count () {
+    return this.getOrm().count()
+  }
+
   static find (id) {
-    return this.constructor._orm.find(id)
-      .then((res) => (new this.constructor(res)))
+    return this.getOrm().find(id)
+      .then((res) => (new this(res)))
   }
 
   static create (params) {
-    const obj = new this.constructor(params)
+    const obj = new this(params)
     const errors = obj.validationErrors()
 
-    if (errors.length === 0) {
-      return this.constructor._orm.create(params)
-        .then((res) => { return new this.constructor(res) })
+    if (Object.keys(errors).length === 0) {
+      params.createdAt = new Date()
+      params.updatedAt = new Date()
+
+      return this.getOrm().create(params)
+        .then((res) => { return new this(res) })
     } else {
       return Promise.reject(errors)
     }
   }
 
-  save () {
+  static getOrm () {
+    if (this.constructor._orm) {
+      return this.constructor._orm
+    } else {
+      const table = this.tableName
+      if (!table) return null
+
+      return this.constructor._orm = require(`${ormPath}/${table}`)
+    }
   }
 
   update (params) {
+    params.updatedAt = new Date()
+
+    return this.constructor.getOrm().update(this.id, params)
+      .then((res) => (new this.constructor(res)))
   }
 
-  delete () {
+  save () {
+    if (this.id) {
+      return this.update(this)
+    } else {
+      return this.constructor.create(this)
+    }
+  }
+
+  del () {
+    return this.constructor.getOrm().del(this.id)
+      .then((res) => (new this.constructor(res)))
   }
 
   validationErrors () {
@@ -51,8 +82,6 @@ class Model {
 }
 
 Model.tableName = null
-Model.fields = []
 Model.validations = {}
-Model._orm = null
 
 module.exports = Model
