@@ -1,87 +1,89 @@
 const ormPath = '../../db/orm'
 
-class Model {
-  constructor(params) {
-    Object.keys(params).forEach((key) => {
-      this[key] = params[key]
-    })
+module.exports = (tableName, validations = {}) => {
+  const orm = require(`${ormPath}/${tableName}`)
+  let instanceMethods = instance => instance
+
+  const methods = {
+    count: () => (orm.count()),
+    find: async (id) => {
+      const res = await orm.find(id)
+      return methods.build(res)
+    },
+    build: (params) => {
+      const instance = instanceMethods({})
+
+      instance.attributes = params
+
+      Object.keys(params).forEach((key) => {
+        instance[key] = params[key]
+      })
+
+      return instance
+    },
+    create: async (params) => {
+      const obj = methods.build(params)
+      const errors = obj.validationErrors()
+
+      if (Object.keys(errors).length === 0) {
+        params.createdAt = new Date()
+        params.updatedAt = new Date()
+
+        const res = await orm.create(params)
+        return methods.build(res)
+      } else {
+        return Promise.reject(errors)
+      }
+    }
   }
 
-  static count () {
-    return this.orm().count()
-  }
-
-  static find (id) {
-    return this.orm().find(id)
-      .then((res) => (new this(res)))
-  }
-
-  static create (params) {
-    const obj = new this(params)
-    const errors = obj.validationErrors()
-
-    if (Object.keys(errors).length === 0) {
-      params.createdAt = new Date()
+  instanceMethods = (instance) => {
+    instance.update = async (params) => {
       params.updatedAt = new Date()
 
-      return this.orm().create(params)
-        .then((res) => { return new this(res) })
-    } else {
-      return Promise.reject(errors)
+      const res = await orm.update(instance.id, params)
+      return methods.build(res)
     }
-  }
 
-  static orm () {
-    if (this.constructor._orm) {
-      return this.constructor._orm
-    } else {
-      const table = this.tableName
-      if (!table) return null
-
-      return this.constructor._orm = require(`${ormPath}/${table}`)
+    instance.save = async () => {
+      if (instance.id) {
+        return await instance.update(instance)
+      } else {
+        return await methods.create(instance)
+      }
     }
-  }
 
-  update (params) {
-    params.updatedAt = new Date()
-
-    return this.constructor.orm().update(this.id, params)
-      .then((res) => (new this.constructor(res)))
-  }
-
-  save () {
-    if (this.id) {
-      return this.update(this)
-    } else {
-      return this.constructor.create(this)
+    instance.del = async () => {
+      const res = await orm.del(instance.id)
+      return methods.build(res)
     }
-  }
 
-  del () {
-    return this.constructor.orm().del(this.id)
-      .then((res) => (new this.constructor(res)))
-  }
+    instance.update = async (params) => {
+      params.updatedAt = new Date()
 
-  validationErrors () {
-    const errors = {}
-    const validations = this.constructor.validations
+      const res = await orm.update(instance.id, params)
+      return methods.build(res)
+    }
 
-    Object.keys(validations).forEach(field => {
-      validations[field].forEach(validation => {
-        const errorMessage = validation(this)
+    instance.validationErrors = () => {
+      const errors = {}
 
-        if (errorMessage) {
-          errors[field] = errors[field] || []
-          errors[field].push(errorMessage)
-        }
+      Object.keys(validations).forEach(field => {
+        validations[field].forEach(validation => {
+          const errorMessage = validation(instance)
+
+          if (errorMessage) {
+            errors[field] = errors[field] || []
+            errors[field].push(errorMessage)
+          }
+        })
       })
-    })
 
-    return errors
+      return errors
+    }
+
+    return instance
   }
+
+  return methods
 }
-
-Model.tableName = null
-Model.validations = {}
-
-module.exports = Model

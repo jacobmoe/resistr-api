@@ -1,6 +1,6 @@
 const { describe, it, beforeEach, afterEach } = require('mocha')
 const { assert } = require('chai')
-const Model = require('../../src/lib/model')
+const modelFactory = require('../../src/lib/model')
 const { truncate } = require('../helpers')
 
 describe('lib/model', () => {
@@ -8,12 +8,15 @@ describe('lib/model', () => {
     truncate('users').then(() => done())
   })
 
-  describe('constructor', () => {
+  describe('build', () => {
     it('constructs an object from params', () => {
-      const obj = new Model({firstName: 'john', lastName: 'doe'})
+      const user = modelFactory('users').build({
+        name: 'tester',
+        email: 'email@example.com'
+      })
 
-      assert.equal(obj.firstName, 'john')
-      assert.equal(obj.lastName, 'doe')
+      assert.equal(user.name, 'tester')
+      assert.equal(user.email, 'email@example.com')
     })
   })
 
@@ -24,32 +27,28 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    beforeEach(() => {
-      Model.tableName = 'users'
-      Model.validations = {}
+    const Model = modelFactory('users')
+    let id
+
+    beforeEach(async () => {
+      const count = await Model.count()
+      assert.equal(count, 0)
     })
 
-    beforeEach((done) => {
-      Model.count()
-        .then((res) => { assert.equal(res, 0) })
-        .then(done)
+    beforeEach(async () => {
+      const res = await Model.create(params)
+      id = res.id
     })
 
-    beforeEach((done) => {
-      Model.create(params)
-        .then((res) => { id = res.id })
-        .then(done)
-    })
-
-    it('returns the count', (done) => {
-      Model.count()
-        .then(res => {assert.equal(res, 1)})
-        .then(done)
+    it('returns the count', async () => {
+      const res = await Model.count()
+      assert.equal(res, 1)
     })
   })
 
   describe('find', () => {
     let id
+    const Model = modelFactory('users')
 
     const params = {
       name: 'joe',
@@ -57,22 +56,14 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    beforeEach((done) => {
-      Model.tableName = 'users'
-      Model.validations = {}
-
-      Model.create(params)
-        .then((res) => { id = res.id })
-        .then(done)
+    beforeEach(async () => {
+      const res = await Model.create(params)
+      id = res.id
     })
 
-    it('fetches a record and inits an instance', (done) => {
-      Model.find(id)
-        .then((res) => {
-          assert(res instanceof Model)
-          assert.equal(res.id, id)
-        })
-        .then(done)
+    it('fetches a record and inits an instance', async () => {
+      const inst = await Model.find(id)
+      assert.equal(inst.id, id)
     })
   })
 
@@ -83,25 +74,18 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    it('creates a new record and returns an instance', (done) => {
-      Model.tableName = 'users'
-      Model.validations = {}
+    it('creates a new record and returns an instance', async () => {
+      const User = modelFactory('users')
 
-      Model.create(params)
-        .then((res) => {
-          assert(res instanceof Model)
-          assert.equal(typeof res.id, 'number')
-          assert.equal(res.name, params.name)
-          assert(res.updatedAt instanceof Date)
-          assert(res.createdAt instanceof Date)
-        })
-        .then(done)
+      const res = await User.create(params)
+      assert.equal(typeof res.id, 'number')
+      assert.equal(res.name, params.name)
+      assert(res.updatedAt instanceof Date)
+      assert(res.createdAt instanceof Date)
     })
 
     it('rejects on validation error', (done) => {
-      Model.tableName = 'users'
-
-      Model.validations = {
+      const validations = {
         notPresent: [
           (obj) => {
             if (obj.notPresent) return null
@@ -110,7 +94,9 @@ describe('lib/model', () => {
         ]
       }
 
-      Model.create(params)
+      const User = modelFactory('users', validations)
+
+      User.create(params)
         .catch((errors) => {
           assert.deepEqual(errors, {
             notPresent: [ 'must be present' ]
@@ -123,6 +109,7 @@ describe('lib/model', () => {
 
   describe('update', () => {
     let obj
+    const Model = modelFactory('users')
 
     const params = {
       name: 'joe',
@@ -130,27 +117,14 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    beforeEach(() => {
-      Model.tableName = 'users'
-      Model.validations = {}
-    })
+    it('updates an existing record', async () => {
+      const obj = await Model.create(params)
+      const updated = await obj.update({name: 'upton'})
 
-    beforeEach((done) => {
-      Model.create(params)
-        .then((res) => {obj = res})
-        .then(done)
-    })
+      assert.equal(updated.name, 'upton')
 
-    it('updates an existing record', (done) => {
-      obj.update({name: 'upton'})
-        .then((res) => {
-          assert.equal(res.name, 'upton')
-        })
-        .then(() => {return Model.find(obj.id)})
-        .then((res) => {
-          assert.equal(res.name, 'upton')
-        })
-        .then(done)
+      const freshObj = await Model.find(obj.id)
+      assert.equal(freshObj.name, 'upton')
     })
   })
 
@@ -161,43 +135,29 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    beforeEach(() => {
-      Model.tableName = 'users'
-      Model.validations = {}
+    const Model = modelFactory('users')
+
+    it('creates if not already persisted', async () => {
+      const obj = Model.build(params)
+
+      const res = await obj.save()
+      assert.equal(typeof res.id, 'number')
+      assert.equal(res.name, 'joe')
+
+      const fetchedObj = await Model.find(res.id)
+      assert.equal(fetchedObj.name, 'joe')
     })
 
-    it('creates if not already persisted', (done) => {
-      const obj = new Model(params)
-
-      obj.save()
-        .then((res) => {
-          assert.equal(typeof res.id, 'number')
-          assert.equal(res.name, 'joe')
-          return res
-        })
-        .then((res) => {return Model.find(res.id)})
-        .then((res) => {
-          assert.equal(res.name, 'joe')
-        })
-        .then(done)
-    })
-
-    it('updates if already persisted', (done) => {
-      const obj = new Model(params)
+    it('updates if already persisted', async () => {
+      const obj = Model.build(params)
       let id
 
-      Model.create(params)
-        .then((res) => {
-          id = res.id
-          res.name = 'batman'
+      const res = await Model.create(params)
+      res.name = 'batman'
 
-          return res.save()
-        })
-        .then(res => {
-          assert.equal(res.id, id)
-          assert.equal(res.name, 'batman')
-        })
-        .then(done)
+      const saved = await res.save()
+      assert.equal(res.id, id)
+      assert.equal(res.name, 'batman')
     })
   })
 
@@ -208,58 +168,42 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    beforeEach(() => {
-      Model.tableName = 'users'
-      Model.validations = {}
-    })
+    const Model = modelFactory('users')
 
-    it('deletes recored', (done) => {
-      let obj
+    it('deletes recored', async () => {
+      const obj = await Model.create(params)
+      let count = await Model.count()
+      assert.equal(count, 1)
 
-      Model.create(params)
-        .then(res => {
-          obj = res
-
-          return Model.count()
-        })
-        .then(count => {
-          assert.equal(count, 1)
-        })
-        .then(() => {
-          return obj.del()
-        })
-        .then(() => {
-          return Model.count()
-        })
-        .then(count => {
-          assert.equal(count, 0)
-        })
-        .then(done)
+      await obj.del()
+      count = await Model.count()
+      assert.equal(count, 0)
     })
   })
 
   describe('validationErrors', () => {
     it('returns errors based on validations', () => {
-      Model.validations = {}
-
-      const obj = new Model({lastName: 'doe'})
+      let Model = modelFactory('users')
+      let obj = Model.build({lastName: 'doe'})
       let errors = obj.validationErrors()
 
       assert.deepEqual(errors, {})
 
-      Model.validations = {
-        firstName: [
+      const validations = {
+        notAThing: [
           (obj) => {
-            if (obj.firstName) return null
+            if (obj.notAThing) return null
             return 'must be present'
           }
         ]
       }
 
+      Model = modelFactory('users', validations)
+      obj = Model.build({name: 'doe'})
       errors = obj.validationErrors()
 
       assert.deepEqual(errors, {
-        firstName: [ 'must be present' ]
+        notAThing: [ 'must be present' ]
       })
     })
   })

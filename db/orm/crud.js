@@ -41,15 +41,13 @@ module.exports = (tableInfo) => {
           return transform.forObject(result[0])
         })
     },
-    update: (id, params) => {
+    update: async (id, params) => {
       delete params.id
-      return queries.update(id, transform.forRecord(params))
-        .then(() => {
-          return queries.find(id)
-        })
-        .then((res) => {
-          return transform.forObject(res[0])
-        })
+
+      await queries.update(id, transform.forRecord(params))
+      const udpated = await queries.find(id)
+
+      return transform.forObject(udpated[0])
     },
     del: (id) => {
       return queries.del(id)

@@ -6,7 +6,7 @@ default:
 
 start:
 	source ./env/${NODE_ENV}.sh && \
-		DEBUG=koa* node --harmony-async-await server.js
+		DEBUG=koa* node server.js
 
 test:
 	NODE_ENV=test ./node_modules/mocha/bin/mocha
