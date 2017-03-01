@@ -1,18 +1,15 @@
-// class User extends require('../lib/model') {
-//   constructor (params) {
-//     super(params)
-//   }
-// }
+const modelFactory = require('../lib/model')
+const validationFactory = require('../lib/validations')
 
-// User.tableName = 'users'
+const tableName = 'users'
 
-// User.validations = {
-//   name: [
-//     (obj) => {
-//       if (obj.name) return null
-//       return 'must be present'
-//     }
-//   ]
-// }
+const validations = {
+  name: [
+    validationFactory.presence('name')
+  ],
+  encryptedPassword: [
+    validationFactory.presence('encryptedPassword')
+  ]
+}
 
-// module.exports = User
+module.exports = modelFactory(tableName, validations)

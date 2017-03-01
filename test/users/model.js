@@ -5,12 +5,13 @@ const { truncate } = require('../helpers')
 
 describe('users/model', () => {
   describe('validations', () => {
-    it('validates name presence', () => {
-      const user = new User({})
+    it('validate', () => {
+      const user = User.build({})
       let errors = user.validationErrors()
 
       assert.deepEqual(errors, {
-        name: [ 'must be present' ]
+        name: [ 'must be present' ],
+        encryptedPassword: [ 'must be present' ]
       })
     })
   })
