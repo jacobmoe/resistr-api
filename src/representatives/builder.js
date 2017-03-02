@@ -6,6 +6,8 @@ function build (data) {
 }
 
 function hydrateDivisions(divisions, data) {
+  if (!divisions) return {}
+
   return Object.keys(divisions).reduce((acc, ocdDivision) => {
     acc[ocdDivision] = {}
 

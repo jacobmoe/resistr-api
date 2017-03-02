@@ -2,15 +2,16 @@ const { describe, it, beforeEach, afterEach } = require('mocha')
 const { assert } = require('chai')
 const modelFactory = require('../../src/lib/model')
 const { truncate } = require('../helpers')
+const table = require('../../db/orm/tables/users')
 
 describe('lib/model', () => {
   afterEach((done) => {
-    truncate('users').then(() => done())
+    truncate(table.name).then(() => done())
   })
 
   describe('build', () => {
     it('constructs an object from params', () => {
-      const user = modelFactory('users').build({
+      const user = modelFactory(table).build({
         name: 'tester',
         email: 'email@example.com'
       })
@@ -27,7 +28,7 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    const Model = modelFactory('users')
+    const Model = modelFactory(table)
     let id
 
     beforeEach(async () => {
@@ -48,7 +49,7 @@ describe('lib/model', () => {
 
   describe('find', () => {
     let id
-    const Model = modelFactory('users')
+    const Model = modelFactory(table)
 
     const params = {
       name: 'joe',
@@ -75,7 +76,7 @@ describe('lib/model', () => {
     }
 
     it('creates a new record and returns an instance', async () => {
-      const User = modelFactory('users')
+      const User = modelFactory(table)
 
       const res = await User.create(params)
       assert.equal(typeof res.id, 'number')
@@ -94,7 +95,7 @@ describe('lib/model', () => {
         ]
       }
 
-      const User = modelFactory('users', validations)
+      const User = modelFactory(table, validations)
 
       User.create(params)
         .catch((errors) => {
@@ -109,7 +110,7 @@ describe('lib/model', () => {
 
   describe('update', () => {
     let obj
-    const Model = modelFactory('users')
+    const Model = modelFactory(table)
 
     const params = {
       name: 'joe',
@@ -135,7 +136,7 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    const Model = modelFactory('users')
+    const Model = modelFactory(table)
 
     it('creates if not already persisted', async () => {
       const obj = Model.build(params)
@@ -168,7 +169,7 @@ describe('lib/model', () => {
       encryptedPassword: '123'
     }
 
-    const Model = modelFactory('users')
+    const Model = modelFactory(table)
 
     it('deletes recored', async () => {
       const obj = await Model.create(params)
@@ -182,10 +183,10 @@ describe('lib/model', () => {
   })
 
   describe('validationErrors', () => {
-    it('returns errors based on validations', () => {
-      let Model = modelFactory('users')
+    it('returns errors based on validations', async () => {
+      let Model = modelFactory(table)
       let obj = Model.build({lastName: 'doe'})
-      let errors = obj.validationErrors()
+      let errors = await obj.validationErrors()
 
       assert.deepEqual(errors, {})
 
@@ -198,9 +199,9 @@ describe('lib/model', () => {
         ]
       }
 
-      Model = modelFactory('users', validations)
+      Model = modelFactory(table, validations)
       obj = Model.build({name: 'doe'})
-      errors = obj.validationErrors()
+      errors = await obj.validationErrors()
 
       assert.deepEqual(errors, {
         notAThing: [ 'must be present' ]

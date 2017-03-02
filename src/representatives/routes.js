@@ -9,7 +9,6 @@ const builder = require('./builder')
 
 function index () {
   return async function (ctx) {
-
     const results = await civicInfo.search(ctx.query.address)
     const body = JSON.parse(results.body)
 

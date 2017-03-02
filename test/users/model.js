@@ -5,13 +5,13 @@ const { truncate } = require('../helpers')
 
 describe('users/model', () => {
   describe('validations', () => {
-    it('validate', () => {
+    it('validate', async () => {
       const user = User.build({})
-      let errors = user.validationErrors()
+      let errors = await user.validationErrors()
 
       assert.deepEqual(errors, {
         name: [ 'must be present' ],
-        encryptedPassword: [ 'must be present' ]
+        password: [ 'must be present' ]
       })
     })
   })

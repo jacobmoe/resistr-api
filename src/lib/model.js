@@ -1,13 +1,10 @@
-const ormPath = '../../db/orm'
-
-module.exports = (tableName, validations = {}) => {
-  const orm = require(`${ormPath}/${tableName}`)
+module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => {
   let instanceMethods = instance => instance
 
   const methods = {
-    count: () => (orm.count()),
+    count: () => (table.count()),
     find: async (id) => {
-      const res = await orm.find(id)
+      const res = await table.find(id)
       return methods.build(res)
     },
     build: (params) => {
@@ -23,13 +20,13 @@ module.exports = (tableName, validations = {}) => {
     },
     create: async (params) => {
       const obj = methods.build(params)
-      const errors = obj.validationErrors()
+      const errors = await obj.validationErrors()
 
       if (Object.keys(errors).length === 0) {
         params.createdAt = new Date()
         params.updatedAt = new Date()
 
-        const res = await orm.create(params)
+        const res = await table.create(params)
         return methods.build(res)
       } else {
         return Promise.reject(errors)
@@ -41,7 +38,7 @@ module.exports = (tableName, validations = {}) => {
     instance.update = async (params) => {
       params.updatedAt = new Date()
 
-      const res = await orm.update(instance.id, params)
+      const res = await table.update(instance.id, params)
       return methods.build(res)
     }
 
@@ -54,23 +51,23 @@ module.exports = (tableName, validations = {}) => {
     }
 
     instance.del = async () => {
-      const res = await orm.del(instance.id)
+      const res = await table.del(instance.id)
       return methods.build(res)
     }
 
     instance.update = async (params) => {
       params.updatedAt = new Date()
 
-      const res = await orm.update(instance.id, params)
+      const res = await table.update(instance.id, params)
       return methods.build(res)
     }
 
-    instance.validationErrors = () => {
+    instance.validationErrors = async () => {
       const errors = {}
 
       Object.keys(validations).forEach(field => {
-        validations[field].forEach(validation => {
-          const errorMessage = validation(instance)
+        validations[field].forEach(async (validation) => {
+          const errorMessage = await validation(instance)
 
           if (errorMessage) {
             errors[field] = errors[field] || []
@@ -82,7 +79,7 @@ module.exports = (tableName, validations = {}) => {
       return errors
     }
 
-    return instance
+    return instanceBuilder(instance)
   }
 
   return methods
