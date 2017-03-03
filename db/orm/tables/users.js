@@ -10,6 +10,5 @@ const table = {
   }
 }
 
-module.exports = Object.assign(require('./crud')(table), {
-
+module.exports = Object.assign(require('../base')(table), {
 })

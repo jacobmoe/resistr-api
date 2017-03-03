@@ -5,8 +5,11 @@ const queryBuilders = (tableInfo) => {
     count: () => {
       return knex(tableInfo.name).count()
     },
-    find: (id) => {
-      return knex(tableInfo.name).select().where('id', id)
+    select: () => {
+      return knex(tableInfo.name).select()
+    },
+    where: (params) => {
+      return knex(tableInfo.name).select().where(params)
     },
     create: (params) => {
       return knex(tableInfo.name).insert(params, '*')
@@ -30,8 +33,8 @@ module.exports = (tableInfo) => {
         return result[0].count
       })
     },
-    find: (id) => {
-      return queries.find(id).then((result) => {
+    find: (params) => {
+      return queries.where(params).then((result) => {
         return transform.forObject(result[0])
       })
     },
@@ -45,7 +48,7 @@ module.exports = (tableInfo) => {
       delete params.id
 
       await queries.update(id, transform.forRecord(params))
-      const udpated = await queries.find(id)
+      const udpated = await queries.where({id: id})
 
       return transform.forObject(udpated[0])
     },

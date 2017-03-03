@@ -10,4 +10,38 @@ describe('lib/validations', () => {
       assert.isNull(validation({name: 'tony'}))
     })
   })
+
+  describe('unique', () => {
+    it('validates uniqueness of field', async () => {
+      const validation = validationFactory.unique('name')
+      let mockObj = {
+        name: 'tim',
+        class: () => {
+          return {
+            find: (params) => {
+              if (params.name === mockObj.name) {
+                return params
+              } else {
+                return null
+              }
+            }
+          }
+        }
+      }
+
+      assert.equal(await validation(mockObj), 'already exists')
+
+      mockObj = {
+        name: 'tom',
+        class: () => {
+          return {
+            find: (params) => {
+              return null
+            }
+          }
+        }
+      }
+      assert.isNull(await validation(mockObj))
+    })
+  })
 })

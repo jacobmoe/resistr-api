@@ -3,9 +3,13 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
 
   const methods = {
     count: () => (table.count()),
-    find: async (id) => {
-      const res = await table.find(id)
-      return methods.build(res)
+    find: async (params) => {
+      if (typeof params === 'number') {
+        params = {id: params}
+      }
+
+      const res = await table.find(params)
+      return res && methods.build(res)
     },
     build: (params) => {
       const instance = instanceMethods({})
@@ -31,10 +35,17 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       } else {
         return Promise.reject(errors)
       }
+    },
+    def: (name, method) => {
+      methods[name] = method
     }
   }
 
   instanceMethods = (instance) => {
+    instance.class = () => {
+      return methods
+    }
+
     instance.update = async (params) => {
       params.updatedAt = new Date()
 
@@ -65,16 +76,22 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
     instance.validationErrors = async () => {
       const errors = {}
 
-      Object.keys(validations).forEach(field => {
-        validations[field].forEach(async (validation) => {
+      // do it in parallel
+      // await Promise.all(files.map(async (file) => {
+      //   const contents = await fs.readFile(file, 'utf8')
+      //   console.log(contents)
+      // }));
+
+      for (let field in validations) {
+        for (let validation of validations[field]) {
           const errorMessage = await validation(instance)
 
           if (errorMessage) {
             errors[field] = errors[field] || []
             errors[field].push(errorMessage)
           }
-        })
-      })
+        }
+      }
 
       return errors
     }

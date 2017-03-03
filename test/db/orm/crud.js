@@ -89,7 +89,7 @@ describe('db/orm/crud', () => {
       const crudTable = crud(table)
 
       crudTable.create(params)
-        .then((res) => { return crudTable.find(res.id) })
+        .then((res) => { return crudTable.find({id: res.id}) })
         .then(res => {
           assert.equal(res.email, params.email)
           assert.equal(res.name, params.name)
