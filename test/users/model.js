@@ -10,16 +10,16 @@ describe('users/model', () => {
   })
 
   describe('validations', () => {
-    // it('validates presence', async () => {
-    //   const user = User.build({})
-    //   let errors = await user.validationErrors()
+    it('validates presence', async () => {
+      const user = User.build({})
+      let errors = await user.validationErrors()
 
-    //   assert.deepEqual(errors, {
-    //     email: [ 'must be present' ],
-    //     name: [ 'must be present' ],
-    //     password: [ 'must be present' ]
-    //   })
-    // })
+      assert.deepEqual(errors, {
+        email: [ 'must be present' ],
+        name: [ 'must be present' ],
+        password: [ 'must be present' ]
+      })
+    })
 
     it('validates uniqueness', async () => {
       await User.create({
@@ -28,17 +28,17 @@ describe('users/model', () => {
         name: 'me'
       })
 
-      // const user = User.build({
-      //   email: 'test@example'.com,
-      //   password: 'test',
-      //   name: 'me'
-      // })
+      const user = User.build({
+        email: 'test@example.com',
+        password: 'test',
+        name: 'me'
+      })
 
-      // let errors = await user.validationErrors()
+      let errors = await user.validationErrors()
 
-      // assert.deepEqual(errors, {
-      //   email: [ 'must be present' ]
-      // })
+      assert.deepEqual(errors, {
+        email: [ 'already exists' ]
+      })
     })
   })
 })

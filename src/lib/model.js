@@ -76,22 +76,16 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
     instance.validationErrors = async () => {
       const errors = {}
 
-      // do it in parallel
-      // await Promise.all(files.map(async (file) => {
-      //   const contents = await fs.readFile(file, 'utf8')
-      //   console.log(contents)
-      // }));
+      await Promise.all(Object.keys(validations).map(field => {
+        return Promise.all(validations[field].map(async (validation) => {
+          const errMessage = await validation(instance)
 
-      for (let field in validations) {
-        for (let validation of validations[field]) {
-          const errorMessage = await validation(instance)
-
-          if (errorMessage) {
+          if (errMessage) {
             errors[field] = errors[field] || []
-            errors[field].push(errorMessage)
+            errors[field].push(errMessage)
           }
-        }
-      }
+        }))
+      }))
 
       return errors
     }

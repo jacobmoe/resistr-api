@@ -192,7 +192,7 @@ describe('lib/model', () => {
 
       const validations = {
         notAThing: [
-          (obj) => {
+          async (obj) => {
             if (obj.notAThing) return null
             return 'must be present'
           }

@@ -1,6 +1,6 @@
 module.exports = {
   presence: (field) => {
-    return (obj) => {
+    return async (obj) => {
       if (obj[field]) return null
       return 'must be present'
     }

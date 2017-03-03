@@ -4,10 +4,10 @@ const validationFactory = require('../../src/lib/validations')
 
 describe('lib/validations', () => {
   describe('presence', () => {
-    it('validates presence of field', () => {
+    it('validates presence of field', async () => {
       const validation = validationFactory.presence('name')
-      assert.equal(validation({}), 'must be present')
-      assert.isNull(validation({name: 'tony'}))
+      assert.equal(await validation({}), 'must be present')
+      assert.isNull(await validation({name: 'tony'}))
     })
   })
 
