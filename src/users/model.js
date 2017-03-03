@@ -21,10 +21,19 @@ const validations = {
   ]
 }
 
-const User = modelFactory(table, validations)
+const User = modelFactory(table, validations, (instance) => {
+  instance.prepare = () => {
+    const params = Object.assign({}, instance.params)
+    delete params.encryptedPassword
+
+    return params
+  }
+
+  return instance
+})
 
 const factoryCreate = User.create
-User.create = async (params) => {
+User.classDef('create', async (params) => {
   const obj = User.build(params)
   const errors = obj.validationErrors()
 
@@ -36,6 +45,6 @@ User.create = async (params) => {
   params.encryptedPassword = hash
 
   return await factoryCreate(params)
-}
+})
 
 module.exports = User

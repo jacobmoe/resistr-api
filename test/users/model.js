@@ -29,15 +29,15 @@ describe('users/model', () => {
       })
 
       const user = User.build({
-        email: 'test@example.com',
-        password: 'test',
-        name: 'me'
+        email: 'test@example.com'
       })
 
       let errors = await user.validationErrors()
 
       assert.deepEqual(errors, {
-        email: [ 'already exists' ]
+        email: [ 'already exists' ],
+        name: [ 'must be present' ],
+        password: [ 'must be present' ]
       })
     })
   })

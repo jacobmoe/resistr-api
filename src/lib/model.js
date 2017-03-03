@@ -14,7 +14,7 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
     build: (params) => {
       const instance = instanceMethods({})
 
-      instance.attributes = params
+      instance.params = params
 
       Object.keys(params).forEach((key) => {
         instance[key] = params[key]
@@ -36,7 +36,7 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
         return Promise.reject(errors)
       }
     },
-    def: (name, method) => {
+    classDef: (name, method) => {
       methods[name] = method
     }
   }
@@ -90,7 +90,7 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       return errors
     }
 
-    return instanceBuilder(instance)
+    return instanceBuilder(instance) || instance
   }
 
   return methods
