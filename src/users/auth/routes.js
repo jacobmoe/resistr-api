@@ -4,7 +4,6 @@ const controller = require('./controller')
 const router = new Router()
 
 router.post('/register', controller.register())
-router.get('/login', controller.login())
-router.get('/logout', controller.logout())
+router.post('/login', controller.login())
 
 module.exports = router
