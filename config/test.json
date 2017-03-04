@@ -4,5 +4,8 @@
     "database": "resistr_test",
     "user": "postgres",
     "password": ""
+  },
+  "jwt": {
+    "secret": "test-secret"
   }
 }

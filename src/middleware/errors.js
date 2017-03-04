@@ -1,13 +1,15 @@
 module.exports = function() {
   return async (ctx, next) => {
-    if (process.env.NODE_ENV === 'development') {
+    try {
       await next()
-    } else {
-      try {
-        await next()
-      } catch (err) {
-        ctx.body = { message: err.message }
+    } catch (err) {
+      switch (err.status) {
+      case 401:
+        ctx.status = 401
+        ctx.body = 'Protected resource'
+      default:
         ctx.status = err.status || 500
+        ctx.body = { message: err.message }
       }
     }
   }

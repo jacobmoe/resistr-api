@@ -6,8 +6,6 @@ const table = require('../../db/orm/tables/users')
 
 const tableName = 'users'
 
-const saltRounds = 10
-
 const validations = {
   email: [
     validationFactory.presence('email'),
@@ -29,6 +27,17 @@ const User = modelFactory(table, validations, (instance) => {
     return params
   }
 
+  instance.validatePassword = async (password) => {
+    try {
+      return await bcrypt.compare(
+        password,
+        instance.encryptedPassword
+      )
+    } catch (err) {
+      return Promise.reject('Error checking password')
+    }
+  }
+
   return instance
 })
 
@@ -41,8 +50,12 @@ User.classDef('create', async (params) => {
     return Promise.reject(errors)
   }
 
-  const hash = await bcrypt.hash(obj.password, 10)
-  params.encryptedPassword = hash
+  try {
+    const hash = await bcrypt.hash(obj.password, 10)
+    params.encryptedPassword = hash
+  } catch (err) {
+    throw {err: 'password error'}
+  }
 
   return await factoryCreate(params)
 })

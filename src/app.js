@@ -3,9 +3,7 @@ const router = new require('koa-router')()
 
 const app = new Koa();
 
-app.use(require('./middleware/cors'))
-app.use(require('./middleware/logger')())
-app.use(require('./middleware/errors')())
+require('./middleware')(app)
 
 router.get('/', function (ctx, next) {
   ctx.body = 'resister API'

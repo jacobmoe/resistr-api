@@ -68,7 +68,6 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
 
     instance.update = async (params) => {
       params.updatedAt = new Date()
-
       const res = await table.update(instance.id, params)
       return methods.build(res)
     }
@@ -90,7 +89,7 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       return errors
     }
 
-    return instanceBuilder(instance) || instance
+    return instanceBuilder(instance)
   }
 
   return methods

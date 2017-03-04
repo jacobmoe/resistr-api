@@ -19,17 +19,13 @@ describe('lib/validations', () => {
         class: () => {
           return {
             find: (params) => {
-              if (params.name === mockObj.name) {
-                return params
-              } else {
-                return null
-              }
+              return params
             }
           }
         }
       }
 
-      assert.equal(await validation(mockObj), 'already exists')
+      assert.equal(await validation(mockObj), 'has already been taken')
 
       mockObj = {
         name: 'tom',
