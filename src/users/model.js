@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 
-const modelFactory = require('../lib/model')
+const modelFactory = require('../lib/modelFactory')
 const validationFactory = require('../lib/validations')
 const table = require('../../db/orm/tables/users')
 
@@ -54,7 +54,7 @@ User.classDef('create', async (params) => {
     const hash = await bcrypt.hash(obj.password, 10)
     params.encryptedPassword = hash
   } catch (err) {
-    throw {err: 'password error'}
+    throw { password: ['invalid'] }
   }
 
   return await factoryCreate(params)

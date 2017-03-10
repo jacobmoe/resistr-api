@@ -11,7 +11,7 @@ module.exports = {
       const result = await obj.class().find({[field]: value})
 
       if (result) {
-        return 'has already been taken'
+        return 'already taken'
       } else {
         return null
       }

@@ -35,7 +35,7 @@ describe('users/model', () => {
       let errors = await user.validationErrors()
 
       assert.deepEqual(errors, {
-        email: [ 'has already been taken' ],
+        email: [ 'already taken' ],
         name: [ 'must be present' ],
         password: [ 'must be present' ]
       })

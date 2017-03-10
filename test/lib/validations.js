@@ -25,7 +25,7 @@ describe('lib/validations', () => {
         }
       }
 
-      assert.equal(await validation(mockObj), 'has already been taken')
+      assert.equal(await validation(mockObj), 'already taken')
 
       mockObj = {
         name: 'tom',

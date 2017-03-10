@@ -84,7 +84,7 @@ describe('users/auth/controller', () => {
 
       assert.isUndefined(ctx.body.user)
       assert.isUndefined(ctx.body.token)
-      assert.isString(ctx.body.error)
+      assert.isString(ctx.body.password)
       assert.equal(ctx.status, 401)
 
       ctx = {
@@ -102,7 +102,7 @@ describe('users/auth/controller', () => {
 
       assert.isUndefined(ctx.body.user)
       assert.isUndefined(ctx.body.token)
-      assert.isString(ctx.body.error)
+      assert.isString(ctx.body.password)
       assert.equal(ctx.status, 401)
     })
   })

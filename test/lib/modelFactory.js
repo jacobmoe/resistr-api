@@ -1,10 +1,10 @@
 const { describe, it, beforeEach, afterEach } = require('mocha')
 const { assert } = require('chai')
-const modelFactory = require('../../src/lib/model')
+const modelFactory = require('../../src/lib/modelFactory')
 const { truncate } = require('../helpers')
 const table = require('../../db/orm/tables/users')
 
-describe('lib/model', () => {
+describe('lib/modelFactory', () => {
   afterEach((done) => {
     truncate(table.name).then(() => done())
   })

@@ -40,7 +40,7 @@ function login () {
         }
       } else {
         ctx.status = 401
-        ctx.body = { error: 'email or password does not match' }
+        ctx.body = { password: 'incorrect email or password' }
       }
     } catch (err) {
       ctx.status = 400
