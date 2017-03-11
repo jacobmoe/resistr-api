@@ -1,4 +1,8 @@
-module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => {
+module.exports = (
+  table,
+  validations = {},
+  instanceBuilder = (inst => inst)
+) => {
   let instanceMethods = instance => instance
 
   const methods = {
@@ -38,6 +42,15 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
     },
     classDef: (name, method) => {
       methods[name] = method
+    },
+    findOrCreate: async (params) => {
+      let res = await methods.find(params)
+
+      if (!res) {
+        res = await methods.create(params)
+      }
+
+      return res
     }
   }
 

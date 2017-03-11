@@ -34,7 +34,7 @@ module.exports = (tableInfo) => {
       })
     },
     find: (params) => {
-      return queries.where(params).then((result) => {
+      return queries.where(transform.forRecord(params)).then((result) => {
         return transform.forObject(result[0])
       })
     },

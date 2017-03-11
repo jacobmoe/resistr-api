@@ -108,6 +108,28 @@ describe('lib/modelFactory', () => {
     })
   })
 
+  describe('findOrCreate', () => {
+    const params = {
+      name: 'joe',
+      email: 'test@example.com',
+      encryptedPassword: '123'
+    }
+
+    it('creates a new record and returns an instance', async () => {
+      const User = modelFactory(table)
+
+      let res = await User.findOrCreate(params)
+      assert.equal(res.name, 'joe')
+
+      assert.equal(await User.count(), 1)
+
+      res = await User.findOrCreate(params)
+      assert.equal(res.name, 'joe')
+
+      assert.equal(await User.count(), 1)
+    })
+  })
+
   describe('update', () => {
     let obj
     const Model = modelFactory(table)
