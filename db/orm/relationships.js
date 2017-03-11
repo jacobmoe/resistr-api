@@ -1,8 +1,13 @@
 const knex = require('../connection')
 
-module.exports = (table, instance, foreignKey) => {
-  return {
-    hasMany: knex(table.name).where({[foreignKey]: instance.id}),
-    belongsTo: null
+function hasMany (foreignTableName, foreignKey) {
+  return function (id) {
+    return {
+      [foreignTableName]: knex(foreignTableName).where({[foreignKey]: id})
+    }
   }
+}
+
+module.exports = {
+  hasMany
 }

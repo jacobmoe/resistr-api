@@ -5,10 +5,16 @@ module.exports = {
       return 'must be present'
     }
   },
-  unique: (field) => {
+  unique: (field, scope = []) => {
     return async (obj) => {
       const value = obj[field] || null
-      const result = await obj.class().find({[field]: value})
+      const search = {[field]: value}
+
+      scope.forEach((scopeField) => {
+        search[scopeField] = obj[scopeField] || null
+      })
+
+      const result = await obj.class().find(search)
 
       if (result) {
         return 'already taken'

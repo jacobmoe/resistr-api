@@ -3,7 +3,7 @@ const table = {
   columns: {
     id: 'id',
     name: 'name',
-    officName: 'office_name',
+    officeName: 'office_name',
     ocdDivisionIdentifier: 'ocd_division_identifier',
     createdAt: 'created_at',
     updatedAt: 'updated_at'

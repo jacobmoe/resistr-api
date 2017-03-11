@@ -102,6 +102,10 @@ module.exports = (
       return errors
     }
 
+    instance.prepare = () => {
+      return instance.params
+    }
+
     return instanceBuilder(instance)
   }
 
