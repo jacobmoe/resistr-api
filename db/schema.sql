@@ -34,6 +34,76 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: actions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE actions (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE actions OWNER TO postgres;
+
+--
+-- Name: actions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE actions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE actions_id_seq OWNER TO postgres;
+
+--
+-- Name: actions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE actions_id_seq OWNED BY actions.id;
+
+
+--
+-- Name: issues; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE issues (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE issues OWNER TO postgres;
+
+--
+-- Name: issues_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE issues_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE issues_id_seq OWNER TO postgres;
+
+--
+-- Name: issues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE issues_id_seq OWNED BY issues.id;
+
+
+--
 -- Name: knex_migrations; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -80,6 +150,81 @@ CREATE TABLE knex_migrations_lock (
 ALTER TABLE knex_migrations_lock OWNER TO postgres;
 
 --
+-- Name: representatives; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE representatives (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    ocd_division_identifier character varying(255) NOT NULL,
+    office_name character varying(255) NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE representatives OWNER TO postgres;
+
+--
+-- Name: representatives_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE representatives_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE representatives_id_seq OWNER TO postgres;
+
+--
+-- Name: representatives_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE representatives_id_seq OWNED BY representatives.id;
+
+
+--
+-- Name: user_actions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE user_actions (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    user_id integer NOT NULL,
+    action_id integer NOT NULL,
+    representative_id integer NOT NULL,
+    issue_id integer NOT NULL
+);
+
+
+ALTER TABLE user_actions OWNER TO postgres;
+
+--
+-- Name: user_actions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE user_actions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_actions_id_seq OWNER TO postgres;
+
+--
+-- Name: user_actions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE user_actions_id_seq OWNED BY user_actions.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -92,10 +237,6 @@ CREATE TABLE users (
     reset_password_sent_at character varying(255),
     email character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
-    avatar_file_name character varying(255),
-    avatar_content_type character varying(255),
-    avatar_file_size integer,
-    avatar_updated_at timestamp with time zone,
     description text
 );
 
@@ -127,7 +268,35 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY actions ALTER COLUMN id SET DEFAULT nextval('actions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY issues ALTER COLUMN id SET DEFAULT nextval('issues_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY knex_migrations ALTER COLUMN id SET DEFAULT nextval('knex_migrations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representatives ALTER COLUMN id SET DEFAULT nextval('representatives_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY user_actions ALTER COLUMN id SET DEFAULT nextval('user_actions_id_seq'::regclass);
 
 
 --
@@ -138,11 +307,51 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
+-- Name: actions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY actions
+    ADD CONSTRAINT actions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: issues_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY issues
+    ADD CONSTRAINT issues_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: knex_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY knex_migrations
     ADD CONSTRAINT knex_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: representatives_name_office_name_ocd_division_identifier_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representatives
+    ADD CONSTRAINT representatives_name_office_name_ocd_division_identifier_unique UNIQUE (name, office_name, ocd_division_identifier);
+
+
+--
+-- Name: representatives_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representatives
+    ADD CONSTRAINT representatives_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_actions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY user_actions
+    ADD CONSTRAINT user_actions_pkey PRIMARY KEY (id);
 
 
 --
@@ -159,6 +368,55 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: representatives_name_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX representatives_name_index ON representatives USING btree (name);
+
+
+--
+-- Name: representatives_ocd_division_identifier_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX representatives_ocd_division_identifier_index ON representatives USING btree (ocd_division_identifier);
+
+
+--
+-- Name: representatives_office_name_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX representatives_office_name_index ON representatives USING btree (office_name);
+
+
+--
+-- Name: user_actions_action_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_actions_action_id_index ON user_actions USING btree (action_id);
+
+
+--
+-- Name: user_actions_issue_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_actions_issue_id_index ON user_actions USING btree (issue_id);
+
+
+--
+-- Name: user_actions_representative_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_actions_representative_id_index ON user_actions USING btree (representative_id);
+
+
+--
+-- Name: user_actions_user_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX user_actions_user_id_index ON user_actions USING btree (user_id);
 
 
 --

@@ -13,11 +13,6 @@ exports.up = function(knex, Promise) {
     t.string('email').notNull().unique().index();
     t.string('name').notNull();
 
-    t.string('avatar_file_name')
-    t.string('avatar_content_type')
-    t.integer('avatar_file_size')
-    t.dateTime('avatar_updated_at')
-
     t.text('description')
   })
 };

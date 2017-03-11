@@ -5,11 +5,10 @@ default:
 	make start
 
 start:
-	source ./env/${NODE_ENV}.sh && \
-		DEBUG=koa* node server.js
+	source ./env/${NODE_ENV}.sh && DEBUG=koa* node server.js
 
 test:
-	NODE_ENV=test ./node_modules/mocha/bin/mocha
+	source ./env/test.sh && ./node_modules/mocha/bin/mocha
 
 db.create:
 	node ./db/create.js
