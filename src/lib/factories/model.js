@@ -1,8 +1,4 @@
-module.exports = (
-  table,
-  validations = {},
-  instanceBuilder = (inst => inst)
-) => {
+module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => {
   let instanceMethods = instance => instance
 
   const methods = {

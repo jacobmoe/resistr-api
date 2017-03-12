@@ -2,7 +2,7 @@ const { describe, it, beforeEach, afterEach } = require('mocha')
 const { assert } = require('chai')
 const controller = require('../../src/userActions/controller')
 const { truncate } = require('../helpers')
-const modelFactory = require('../../src/lib/modelFactory')
+const modelFactory = require('../../src/lib/factories/model')
 const userTable = require('../../db/orm/tables/users')
 
 const UserAction = require('../../src/userActions/userAction')

@@ -1,4 +1,4 @@
-const modelFactory = require('../lib/modelFactory')
+const modelFactory = require('../lib/factories/model')
 const validationFactory = require('../lib/validations')
 const actionsTable = require('../../db/orm/tables/user_actions')
 

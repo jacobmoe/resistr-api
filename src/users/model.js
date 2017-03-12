@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 
-const modelFactory = require('../lib/modelFactory')
+const modelFactory = require('../lib/factories/model')
 const validationFactory = require('../lib/validations')
 const table = require('../../db/orm/tables/users')
 
