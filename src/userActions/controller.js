@@ -4,7 +4,7 @@ const Issue = require('./issue')
 const Action = require('./action')
 
 function index () {
-  return async (ctx) => {
+  return async function (ctx) {
     const user = ctx.state.user
 
     const params = { userId: user.id }
@@ -28,7 +28,7 @@ function index () {
 }
 
 function create () {
-  return async (ctx) => {
+  return async function (ctx) {
     const body = ctx.request.body
     const user = ctx.state.user
 

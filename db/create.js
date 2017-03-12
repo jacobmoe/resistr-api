@@ -11,7 +11,7 @@ const connection = knex({ client: 'pg', connection: dbConnection})
 connection.raw(`
   CREATE DATABASE "${dbName}"
   WITH ENCODING = '${encoding}';
-`) .then(console.log(`Created ${dbName}`))
+`) .then(() => { console.log(`Created ${dbName}`) })
   .catch((e) => {
     console.log("Problem creating database. " + e)
   })

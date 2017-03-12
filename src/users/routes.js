@@ -6,8 +6,6 @@ const router = new Router()
 
 const authRoutes = require('./auth/routes')
 
-require('./middleware')(app)
-
 router.use('/auth', authRoutes.routes(), authRoutes.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())

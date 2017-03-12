@@ -9,7 +9,7 @@ delete dbConnection.database
 const connection = knex({ client: 'pg', connection: dbConnection})
 
 connection.raw(`DROP DATABASE "${dbName}";`)
-  .then(console.log(`Dropped ${dbName}`))
+  .then(() => { console.log(`Dropped ${dbName}`) })
   .catch((e) => {
     console.log("Problem dropping database. " + e)
   })

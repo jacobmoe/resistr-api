@@ -15,11 +15,11 @@ Issue examples:
 - immigration]]></comment>
         <location>
             <x>1056.00</x>
-            <y>646.00</y>
+            <y>642.00</y>
         </location>
         <size>
             <width>181.00</width>
-            <height>206.00</height>
+            <height>214.00</height>
         </size>
         <zorder>10</zorder>
         <commentTitle><![CDATA[actions and issues]]></commentTitle>
@@ -230,7 +230,7 @@ Issue examples:
         </location>
         <size>
             <width>200.00</width>
-            <height>100.00</height>
+            <height>120.00</height>
         </size>
         <zorder>2</zorder>
         <SQLField>
@@ -243,6 +243,11 @@ Issue examples:
             <name><![CDATA[name]]></name>
             <type><![CDATA[CHAR]]></type>
             <uid><![CDATA[06A3DB63-4850-4B05-9B5C-E520E36DFF81]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[description]]></name>
+            <type><![CDATA[CHAR]]></type>
+            <uid><![CDATA[947FF616-07D6-4D67-B6FA-96283BEB6B20]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[created_at]]></name>
@@ -383,7 +388,7 @@ Issue examples:
         </location>
         <size>
             <width>200.00</width>
-            <height>100.00</height>
+            <height>120.00</height>
         </size>
         <zorder>1</zorder>
         <SQLField>
@@ -397,6 +402,11 @@ Issue examples:
             <type><![CDATA[CHAR]]></type>
             <forcedUnique><![CDATA[0]]></forcedUnique>
             <uid><![CDATA[98C7B68E-F07B-4E20-9488-B5E62CDFD4A2]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[description]]></name>
+            <type><![CDATA[CHAR]]></type>
+            <uid><![CDATA[ADA84DAB-3482-4FDD-8002-06CF9F140F14]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[created_at]]></name>
@@ -509,8 +519,8 @@ Issue examples:
         <name><![CDATA[team_actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>211.00</x>
-            <y>491.00</y>
+            <x>210.00</x>
+            <y>500.00</y>
         </location>
         <size>
             <width>200.00</width>

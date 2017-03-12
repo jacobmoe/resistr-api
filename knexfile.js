@@ -6,7 +6,7 @@ module.exports = {
       directory: './db/migrations'
     },
     seeds: {
-      directory: './seeds/development'
+      directory: './db/seeds/development'
     }
   },
   test: {
@@ -16,7 +16,7 @@ module.exports = {
       directory: './db/migrations'
     },
     seeds: {
-      directory: './seeds/test'
+      directory: './db/seeds/test'
     }
   },
   production: {
@@ -26,7 +26,7 @@ module.exports = {
       directory: './db/migrations'
     },
     seeds: {
-      directory: './seeds/production'
+      directory: './db/seeds/production'
     }
   }
 }

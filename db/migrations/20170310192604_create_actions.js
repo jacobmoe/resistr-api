@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     t.dateTime('updated_at').nullable();
 
     t.string('name').notNull();
+    t.text('description')
   })
 };
 

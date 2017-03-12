@@ -41,7 +41,8 @@ CREATE TABLE actions (
     id integer NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone,
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    description text
 );
 
 
@@ -76,7 +77,8 @@ CREATE TABLE issues (
     id integer NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone,
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    description text
 );
 
 

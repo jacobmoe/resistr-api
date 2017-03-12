@@ -23,6 +23,8 @@ const User = modelFactory(table, validations, (instance) => {
   instance.prepare = () => {
     const params = Object.assign({}, instance.params)
     delete params.encryptedPassword
+    delete params.createdAt
+    delete params.updatedAt
 
     return params
   }
