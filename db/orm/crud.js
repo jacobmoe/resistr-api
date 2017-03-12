@@ -38,6 +38,11 @@ module.exports = (tableInfo) => {
         return transform.forObject(result[0])
       })
     },
+    where: (params) => {
+      return queries.where(transform.forRecord(params)).then((result) => {
+        return result.map((item) => (transform.forObject(item)))
+      })
+    },
     create: (params) => {
       return queries.create(transform.forRecord(params))
         .then((result) => {

@@ -6,7 +6,8 @@ const router = new Router()
 
 const controller = require('./controller')
 
-router.post('/user-actions', controller.create())
+router.get('/', controller.index())
+router.post('/', controller.create())
 
 app.use(router.routes()).use(router.allowedMethods())
 

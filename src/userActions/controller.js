@@ -3,6 +3,30 @@ const Representative = require('./representative')
 const Issue = require('./issue')
 const Action = require('./action')
 
+function index () {
+  return async (ctx) => {
+    const user = ctx.state.user
+
+    const params = { userId: user.id }
+    const query = ctx.query || {}
+
+    try {
+      const results = await UserAction.where(
+        Object.assign({}, params, query)
+      )
+
+      ctx.status = 200
+      ctx.body = {
+        page: 0,
+        results
+      }
+    } catch (err) {
+      ctx.status = 400
+      ctx.body = err
+    }
+  }
+}
+
 function create () {
   return async (ctx) => {
     const body = ctx.request.body
@@ -35,5 +59,6 @@ function create () {
 }
 
 module.exports = {
+  index,
   create
 }

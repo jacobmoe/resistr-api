@@ -15,6 +15,10 @@ module.exports = (
       const res = await table.find(params)
       return res && methods.build(res)
     },
+    where: async (params) => {
+      const res = await table.where(params)
+      return res && res.map((item) => (methods.build(item)))
+    },
     build: (params) => {
       const instance = instanceMethods({})
 

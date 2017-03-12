@@ -128,4 +128,48 @@ describe('userActions/controller', () => {
       assert.equal(await UserAction.count(), 0)
     })
   })
+
+  describe('index', () => {
+    it('returns a user action list', async () => {
+      const user = await User.findOrCreate({
+        name: 'tony',
+        email: 'tony@example.com',
+        encryptedPassword: '123'
+      })
+
+      await UserAction.create({
+        userId: user.id,
+        issueId: 1,
+        actionId: 1,
+        representativeId: 1
+      })
+
+      let ctx = {
+        state: {
+          user: user
+        }
+      }
+
+      await controller.index()(ctx)
+
+      assert.equal(ctx.body.results.length, 1)
+
+      await UserAction.create({
+        userId: user.id,
+        issueId: 2,
+        actionId: 2,
+        representativeId: 2
+      })
+
+      ctx = {
+        state: {
+          user: user
+        }
+      }
+
+      await controller.index()(ctx)
+
+      assert.equal(ctx.body.results.length, 2)
+    })
+  })
 })

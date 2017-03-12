@@ -68,6 +68,28 @@ describe('lib/modelFactory', () => {
     })
   })
 
+  describe('where', () => {
+    const Model = modelFactory(table)
+
+    const params = {
+      name: 'joe',
+      email: 'test@example.com',
+      encryptedPassword: '123'
+    }
+
+    beforeEach(async () => {
+      await Model.create(params)
+    })
+
+    it('fetches a list of items', async () => {
+      let result = await Model.where({name: 'joe'})
+      assert.equal(result.length, 1)
+
+      result = await Model.where({name: 'tony'})
+      assert.equal(result.length, 0)
+    })
+  })
+
   describe('create', () => {
     const params = {
       name: 'joe',
