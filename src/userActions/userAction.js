@@ -1,6 +1,6 @@
 const modelFactory = require('../lib/factories/model')
 const validationFactory = require('../lib/validations')
-const actionsTable = require('../../db/orm/tables/user_actions')
+const table = require('../../db/orm/tables/user_actions')
 
 const validations = {
   userId: [
@@ -20,6 +20,11 @@ const validations = {
   ]
 }
 
-const UserAction = modelFactory(actionsTable, validations)
+const UserAction = modelFactory(table, validations)
+
+UserAction.classDef('where', async (params) => {
+  const res = table.whereWithAssociations(params)
+  return res && res.map((item) => (UserAction.build(item)))
+})
 
 module.exports = UserAction

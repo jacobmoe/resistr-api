@@ -5,15 +5,8 @@ const Action = require('./action')
 
 function index () {
   return async function (ctx) {
-    const user = ctx.state.user
-
-    const params = { userId: user.id }
-    const query = ctx.query || {}
-
     try {
-      const results = await UserAction.where(
-        Object.assign({}, params, query)
-      )
+      const results = await UserAction.where(ctx.query || {})
 
       ctx.status = 200
       ctx.body = {
