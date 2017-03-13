@@ -1,3 +1,5 @@
+const pluralize = require('pluralize')
+
 const knex = require('../../connection')
 const transformer = require('../transform')
 
@@ -15,8 +17,10 @@ const table = {
 }
 
 const transform = transformer(table)
-const transformRepresentative = transformer(require('./representatives'))
 
+
+// do this dynamically from table columns
+// include in a belongsTo relationship builder
 const selects = [
   'user_actions.*',
   'representatives.id AS representatives_id',
@@ -30,6 +34,10 @@ const selects = [
   'issues.name AS issues_name'
 ]
 
+function transformerForTable(tableName) {
+  return transformer(require(`./${tableName}`))
+}
+
 function transformForTable(tableName, item) {
   let params = Object.keys(item).reduce((acc, key) => {
     const prefix = `${tableName}_`
@@ -40,24 +48,44 @@ function transformForTable(tableName, item) {
     return acc
   }, {})
 
-  return transformer(require(`./${tableName}`)).forObject(params)
+  return transformerForTable(tableName).forObject(params)
+}
+
+function buildSearchParams(params) {
+  return Object.keys(params).reduce((acc, key) => {
+    if (typeof params[key] == 'object') {
+      const tableName = pluralize.plural(key)
+      const transformer = transformerForTable(tableName)
+
+      const record = transformer.forRecord(params[key])
+
+      let fields = Object.keys(record).reduce((recordAcc, recordKey) => {
+        recordAcc[`${tableName}.${recordKey}`] = record[recordKey]
+
+        return recordAcc
+      }, {})
+
+      Object.assign(acc, fields)
+    } else {
+      if (table.columnMap[key]) {
+        acc[`user_actions.${table.columnMap[key]}`] = params[key]
+      }
+    }
+
+    return acc
+  }, {})
 }
 
 module.exports = Object.assign(require('../base')(table), {
-  searchWithRepresentatives: (params) => {
-    const paramsForRep = transformRepresentative.forRecord(params)
+  whereWithAssociations: (params) => {
+    const searchParams = buildSearchParams(params)
 
-    const repParams = Object.keys(paramsForRep).reduce((acc, key) => {
-      acc[`representatives.${key}`] = paramsForRep[key]
-
-      return acc
-    }, {})
-
+    // extract into a generic "belongsTo" relationship builder
     return knex('user_actions').select(selects)
       .leftJoin('representatives', 'user_actions.representative_id', '=', 'representatives.id')
       .leftJoin('actions', 'user_actions.action_id', '=', 'actions.id')
       .leftJoin('issues', 'user_actions.issue_id', '=', 'issues.id')
-      .where(repParams)
+      .where(searchParams)
       .then((res) => {
         return res.map((item) => {
           const userAction = transform.forObject(item)

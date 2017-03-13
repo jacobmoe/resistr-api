@@ -14,7 +14,7 @@ const clearTables = async () => {
   await truncate('user_actions')
 }
 
-describe('db/orm/tables/representatives', () => {
+describe('db/orm/tables/user_actions', () => {
   beforeEach(async () => {
     await clearTables()
     const d = new Date()
@@ -48,13 +48,17 @@ describe('db/orm/tables/representatives', () => {
     await clearTables()
   })
 
-  describe('searchWithRepresentatives', () => {
+  describe('whereWithAssociations', () => {
     it('returns hydrated user_actions', async () => {
-      let res = await table.searchWithRepresentatives({})
+      let res = await table.whereWithAssociations({})
       assert.equal(res.length, 2)
 
-      res = await table.searchWithRepresentatives({
-        ocdDivisionIdentifier: 'div-1'
+      res = await table.whereWithAssociations({
+        userId: 1,
+        representative: {
+          ocdDivisionIdentifier: 'div-1',
+          officeName: 'off-1'
+        }
       })
 
       assert.equal(res.length, 1)
@@ -78,8 +82,21 @@ describe('db/orm/tables/representatives', () => {
       })
 
 
-      res = await table.searchWithRepresentatives({
-        ocdDivisionIdentifier: 'div-2'
+      res = await table.whereWithAssociations({
+        userId: 5,
+        representative: {
+          ocdDivisionIdentifier: 'div-1',
+          officeName: 'off-1'
+        }
+      })
+
+      assert.equal(res.length, 0)
+
+
+      res = await table.whereWithAssociations({
+        representative: {
+          ocdDivisionIdentifier: 'div-2'
+        }
       })
 
       assert.equal(res.length, 1)
