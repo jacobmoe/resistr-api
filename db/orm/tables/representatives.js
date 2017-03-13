@@ -1,6 +1,6 @@
 const table = {
   name: 'representatives',
-  columns: {
+  columnMap: {
     id: 'id',
     name: 'name',
     officeName: 'office_name',

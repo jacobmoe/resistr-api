@@ -42,7 +42,8 @@ CREATE TABLE actions (
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone,
     name character varying(255) NOT NULL,
-    description text
+    description text,
+    icon_name character varying(255)
 );
 
 
@@ -78,7 +79,8 @@ CREATE TABLE issues (
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone,
     name character varying(255) NOT NULL,
-    description text
+    description text,
+    icon_name character varying(255)
 );
 
 

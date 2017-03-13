@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
 
     t.string('name').notNull();
     t.text('description')
+    t.string('icon_name')
   })
 };
 

@@ -6,7 +6,7 @@ const { truncate } = require('../../helpers')
 describe('db/orm/crud', () => {
   const table = {
     name: 'users',
-    columns: {
+    columnMap: {
       id: 'id',
       name: 'name',
       email: 'email',

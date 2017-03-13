@@ -4,7 +4,7 @@ const transform = require('../../../db/orm/transform')
 
 const tableInfo = {
   name: 'stuff',
-  columns: {
+  columnMap: {
     firstName: 'first_name',
     lastName: 'last_name'
   }

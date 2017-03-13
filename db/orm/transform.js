@@ -6,7 +6,7 @@ module.exports = (tableInfo) => {
       if (!params) return null
 
       return Object.keys(params).reduce((acc, key) => {
-        let attrName = _.findKey(tableInfo.columns, (value) => {
+        let attrName = _.findKey(tableInfo.columnMap, (value) => {
           return value === key
         })
 
@@ -19,8 +19,8 @@ module.exports = (tableInfo) => {
       if (!params) return null
 
       return Object.keys(params).reduce((acc, key) => {
-        if (tableInfo.columns[key]) {
-          acc[tableInfo.columns[key]] = params[key]
+        if (tableInfo.columnMap[key]) {
+          acc[tableInfo.columnMap[key]] = params[key]
         }
 
         return acc

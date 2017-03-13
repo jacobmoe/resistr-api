@@ -10,7 +10,7 @@ function index () {
       ctx.status = 200
       ctx.body = {
         page: 0,
-        results
+        results: results || []
       }
     } catch (err) {
       ctx.status = 400

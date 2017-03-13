@@ -1,8 +1,10 @@
 const table = {
   name: 'actions',
-  columns: {
+  columnMap: {
     id: 'id',
     name: 'name',
+    description: 'description',
+    iconName: 'icon_name',
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   }
