@@ -93,5 +93,28 @@ describe('userActions/userAction', () => {
         description: null
       })
     })
+
+    it('takes a time period to search', async () => {
+      const d = new Date('2000')
+
+      await knex('user_actions').insert([
+        {id: 3, user_id: 1, action_id: 1, issue_id: 1, representative_id: 1, created_at: d, updated_at: d},
+      ]);
+
+      let res = await UserAction.where({})
+      assert.equal(res.length, 3)
+
+      res = await UserAction.where({
+        createdAfter: new Date('2001')
+      })
+
+      assert.equal(res.length, 2)
+
+      res = await UserAction.where({
+        createdAfter: new Date('1999')
+      })
+
+      assert.equal(res.length, 3)
+    })
   })
 })
