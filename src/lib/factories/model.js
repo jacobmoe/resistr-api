@@ -1,5 +1,4 @@
-module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => {
-  let instanceMethods = instance => instance
+module.exports = (table, validations = {}, instanceMethods = (inst => inst)) => {
 
   const methods = {
     count: () => (table.count()),
@@ -16,15 +15,9 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       return res && res.map((item) => (methods.build(item)))
     },
     build: (params) => {
-      const instance = instanceMethods({})
-
-      instance.params = params
-
-      Object.keys(params).forEach((key) => {
-        instance[key] = params[key]
-      })
-
-      return instance
+      return instanceBuilder(
+        Object.assign({}, params, { params: params })
+      )
     },
     create: async (params) => {
       const obj = methods.build(params)
@@ -40,9 +33,6 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
         return Promise.reject(errors)
       }
     },
-    classDef: (name, method) => {
-      methods[name] = method
-    },
     findOrCreate: async (params) => {
       let res = await methods.find(params)
 
@@ -51,10 +41,13 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       }
 
       return res
+    },
+    classDef: (name, method) => {
+      methods[name] = method
     }
   }
 
-  instanceMethods = (instance) => {
+  function instanceBuilder (instance) {
     instance.class = () => {
       return methods
     }
@@ -106,7 +99,7 @@ module.exports = (table, validations = {}, instanceBuilder = (inst => inst)) => 
       return instance.params
     }
 
-    return instanceBuilder(instance)
+    return instanceMethods(instance)
   }
 
   return methods

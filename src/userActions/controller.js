@@ -6,7 +6,7 @@ const Action = require('./action')
 function index () {
   return async function (ctx) {
     try {
-      const results = await UserAction.where(ctx.query || {})
+      const results = await UserAction.where(ctx.state.query || {})
 
       ctx.status = 200
       ctx.body = {

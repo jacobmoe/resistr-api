@@ -40,4 +40,53 @@ describe('db/orm/transform', () => {
       })
     })
   })
+
+  describe('buildSearchParams', () => {
+    it('transforms params for query', () => {
+      const userActionTransform = transform(
+        require('../../../db/orm/tables/user_actions')
+      )
+
+      const params = {
+        userId: '1',
+        representative: {
+          ocdDivisionIdentifier: 'ocd-division/country:us',
+          officeName: 'President of the United States',
+          name: 'He Who Must Not Be Named'
+        }
+      }
+
+      assert.deepEqual(userActionTransform.buildSearchParams(params), {
+        "representatives.name": "He Who Must Not Be Named",
+        "representatives.ocd_division_identifier": "ocd-division/country:us",
+        "representatives.office_name": "President of the United States",
+        "user_actions.user_id": "1"
+      })
+    })
+
+    it('skips undefined tables', () => {
+      const userActionTransform = transform(
+        require('../../../db/orm/tables/user_actions')
+      )
+
+      const params = {
+        userId: '1',
+        notAThing: {
+          notAColumn: ''
+        },
+        representative: {
+          ocdDivisionIdentifier: 'ocd-division/country:us',
+          officeName: 'President of the United States',
+          name: 'He Who Must Not Be Named'
+        }
+      }
+
+      assert.deepEqual(userActionTransform.buildSearchParams(params), {
+        "representatives.name": "He Who Must Not Be Named",
+        "representatives.ocd_division_identifier": "ocd-division/country:us",
+        "representatives.office_name": "President of the United States",
+        "user_actions.user_id": "1"
+      })
+    })
+  })
 })

@@ -4,3 +4,4 @@ restclient.http
 npm-debug.log
 env/secrets.sh
 config/production.json
+notes.org

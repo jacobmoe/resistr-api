@@ -14,8 +14,8 @@ Issue examples:
 - voting rights
 - immigration]]></comment>
         <location>
-            <x>1056.00</x>
-            <y>642.00</y>
+            <x>652.00</x>
+            <y>679.00</y>
         </location>
         <size>
             <width>181.00</width>
@@ -30,8 +30,8 @@ Issue examples:
         <name><![CDATA[user_actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>501.00</x>
-            <y>393.00</y>
+            <x>409.00</x>
+            <y>397.00</y>
         </location>
         <size>
             <width>206.00</width>
@@ -114,8 +114,8 @@ Issue examples:
         <name><![CDATA[representatives]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>806.00</x>
-            <y>183.00</y>
+            <x>714.00</x>
+            <y>187.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -162,8 +162,8 @@ Issue examples:
         <name><![CDATA[users]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>488.00</x>
-            <y>138.00</y>
+            <x>396.00</x>
+            <y>142.00</y>
         </location>
         <size>
             <width>206.00</width>
@@ -225,8 +225,8 @@ Issue examples:
         <name><![CDATA[issues]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>812.00</x>
-            <y>763.00</y>
+            <x>417.00</x>
+            <y>789.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -268,8 +268,8 @@ Issue examples:
         <name><![CDATA[team_users]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>172.00</x>
-            <y>305.00</y>
+            <x>80.00</x>
+            <y>309.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -325,8 +325,8 @@ Issue examples:
         <name><![CDATA[user_issues]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>797.00</x>
-            <y>412.00</y>
+            <x>731.00</x>
+            <y>515.00</y>
         </location>
         <size>
             <width>158.00</width>
@@ -383,8 +383,8 @@ Issue examples:
         <name><![CDATA[actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>810.00</x>
-            <y>630.00</y>
+            <x>424.00</x>
+            <y>643.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -428,8 +428,8 @@ Issue examples:
         <name><![CDATA[Comment2_2]]></name>
         <comment><![CDATA[May want to split representatives into “divisions”, “offices” and “officials”, mirroring the Civic Information API structure, and to start storing that data locally. Need to have a way to get the ocd division and the office from an address. ]]></comment>
         <location>
-            <x>1029.00</x>
-            <y>131.00</y>
+            <x>937.00</x>
+            <y>135.00</y>
         </location>
         <size>
             <width>181.00</width>
@@ -440,12 +440,71 @@ Issue examples:
         <labelWindowIndex><![CDATA[4]]></labelWindowIndex>
         <uid><![CDATA[9874C6B9-D094-4151-9649-1B75AD0DD788]]></uid>
     </SQLComment>
+    <SQLTable>
+        <name><![CDATA[representative_issues]]></name>
+        <schema><![CDATA[]]></schema>
+        <location>
+            <x>757.00</x>
+            <y>357.00</y>
+        </location>
+        <size>
+            <width>206.00</width>
+            <height>120.00</height>
+        </size>
+        <zorder>13</zorder>
+        <SQLField>
+            <name><![CDATA[id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <forcedUnique><![CDATA[1]]></forcedUnique>
+            <uid><![CDATA[C2A7AAA1-902E-4679-8D3C-97899305093F]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[representative_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <referencesField>id</referencesField>
+            <referencesTable>representatives</referencesTable>
+            <referencesField><![CDATA[id]]></referencesField>
+            <referencesTable><![CDATA[representatives]]></referencesTable>
+            <sourceCardinality>0</sourceCardinality>
+            <destinationCardinality>0</destinationCardinality>
+            <referencesFieldUID><![CDATA[8024783C-B789-432D-84D4-C58571DCD576]]></referencesFieldUID>
+            <referencesTableUID><![CDATA[62F8C1DC-8896-4538-90FE-B5A1692077DD]]></referencesTableUID>
+            <uid><![CDATA[5F99AA3F-43AE-43D3-AB9F-BA8F898D6686]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[issue_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <referencesField>id</referencesField>
+            <referencesTable>issues</referencesTable>
+            <referencesField><![CDATA[id]]></referencesField>
+            <referencesTable><![CDATA[issues]]></referencesTable>
+            <sourceCardinality>0</sourceCardinality>
+            <destinationCardinality>0</destinationCardinality>
+            <referencesFieldUID><![CDATA[18AD2265-F63A-4342-A468-5CA2DDD4EE8E]]></referencesFieldUID>
+            <referencesTableUID><![CDATA[677994D6-F93B-4963-840C-C7608FA5A0F0]]></referencesTableUID>
+            <uid><![CDATA[8C1F2551-E6AB-45EE-B736-D7D38381C76D]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[created_at]]></name>
+            <type><![CDATA[DATE]]></type>
+            <uid><![CDATA[C6D9BD85-5A68-45BC-B666-7FB0D8725958]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[updated_at]]></name>
+            <type><![CDATA[DATE]]></type>
+            <uid><![CDATA[25726934-0266-408A-9326-335B8A6B4220]]></uid>
+        </SQLField>
+        <labelColor><![CDATA[{0.576471,0.439216,0.858824,1}]]></labelColor>
+        <labelWindowIndex><![CDATA[0]]></labelWindowIndex>
+        <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
+        <uid><![CDATA[A36E2BCD-9ED7-499B-95A9-A52E5CD6011F]]></uid>
+    </SQLTable>
     <SQLComment>
-        <name><![CDATA[Comment2_1]]></name>
+        <name><![CDATA[Comment2_4]]></name>
         <comment><![CDATA[Issues a user is interested in. Maybe a subset of team_issues?]]></comment>
         <location>
-            <x>968.00</x>
-            <y>378.00</y>
+            <x>918.00</x>
+            <y>532.00</y>
         </location>
         <size>
             <width>181.00</width>
@@ -460,8 +519,8 @@ Issue examples:
         <name><![CDATA[team_issues]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>237.00</x>
-            <y>672.00</y>
+            <x>145.00</x>
+            <y>676.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -519,8 +578,8 @@ Issue examples:
         <name><![CDATA[team_actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>210.00</x>
-            <y>500.00</y>
+            <x>118.00</x>
+            <y>504.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -578,8 +637,8 @@ Issue examples:
         <name><![CDATA[teams]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>170.00</x>
-            <y>135.00</y>
+            <x>78.00</x>
+            <y>139.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -631,9 +690,9 @@ Issue examples:
         <SQLEditorFileFormatVersion><![CDATA[3.1]]></SQLEditorFileFormatVersion>
         <uid><![CDATA[794EB00E-76FE-41D2-8B64-F534E9E35AF4]]></uid>
         <windowHeight><![CDATA[1053.000000]]></windowHeight>
-        <windowLocationX><![CDATA[-1885.000000]]></windowLocationX>
+        <windowLocationX><![CDATA[0.000000]]></windowLocationX>
         <windowLocationY><![CDATA[124.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{73, 34}]]></windowScrollOrigin>
+        <windowScrollOrigin><![CDATA[{0, 35}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1885.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>

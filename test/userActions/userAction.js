@@ -63,22 +63,34 @@ describe('userActions/userAction', () => {
 
       assert.equal(res.length, 1)
 
-      assert.deepEqual(res[0].representative, {
+      let representative = res[0].representative 
+      delete representative.updatedAt
+      delete representative.createdAt
+      assert.deepEqual(representative, {
         id: 1,
         ocdDivisionIdentifier: 'div-1',
         officeName: 'off-1',
         name: 'rep-1'
       })
 
-      assert.deepEqual(res[0].action, {
+      let action = res[0].action 
+      delete action.updatedAt
+      delete action.createdAt
+      assert.deepEqual(action, {
         id: 1,
         name: 'act-1',
-        iconName: null
+        iconName: null,
+        description: null
       })
 
-      assert.deepEqual(res[0].issue, {
+      let issue = res[0].issue 
+      delete issue.updatedAt
+      delete issue.createdAt
+      assert.deepEqual(issue, {
         id: 1,
-        name: 'iss-1'
+        name: 'iss-1',
+        iconName: null,
+        description: null
       })
     })
   })

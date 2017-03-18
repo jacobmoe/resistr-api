@@ -63,22 +63,34 @@ describe('db/orm/tables/user_actions', () => {
 
       assert.equal(res.length, 1)
 
-      assert.deepEqual(res[0].representative, {
+      let representative = res[0].representative
+      delete representative.updatedAt
+      delete representative.createdAt
+      assert.deepEqual(representative, {
         id: 1,
         ocdDivisionIdentifier: 'div-1',
         officeName: 'off-1',
         name: 'rep-1'
       })
 
-      assert.deepEqual(res[0].action, {
+      let action = res[0].action
+      delete action.updatedAt
+      delete action.createdAt
+      assert.deepEqual(action, {
         id: 1,
         name: 'act-1',
-        iconName: null
+        iconName: null,
+        description: null
       })
 
+      let issue = res[0].issue
+      delete issue.updatedAt
+      delete issue.createdAt
       assert.deepEqual(res[0].issue, {
         id: 1,
-        name: 'iss-1'
+        name: 'iss-1',
+        iconName: null,
+        description: null
       })
 
 
@@ -101,23 +113,51 @@ describe('db/orm/tables/user_actions', () => {
 
       assert.equal(res.length, 1)
 
-      assert.deepEqual(res[0].representative, {
+      representative = res[0].representative
+      delete representative.updatedAt
+      delete representative.createdAt
+      assert.deepEqual(representative, {
         id: 2,
         ocdDivisionIdentifier: 'div-2',
         officeName: 'off-2',
         name: 'rep-2'
       })
 
-      assert.deepEqual(res[0].action, {
+      action = res[0].action
+      delete action.updatedAt
+      delete action.createdAt
+      assert.deepEqual(action, {
         id: 2,
         name: 'act-2',
-        iconName: null
+        iconName: null,
+        description: null
       })
 
-      assert.deepEqual(res[0].issue, {
+      issue = res[0].issue
+      delete issue.updatedAt
+      delete issue.createdAt
+      assert.deepEqual(issue, {
         id: 2,
-        name: 'iss-2'
+        name: 'iss-2',
+        iconName: null,
+        description: null
       })
+    })
+
+    it('accepts a createdAfter paramater', async () => {
+      const d = new Date(2000, 1, 1)
+
+      await knex('user_actions').insert([
+        {id: 3, user_id: 1, action_id: 1, issue_id: 1, representative_id: 1, created_at: d, updated_at: d},
+      ]);
+
+      res = await table.whereWithAssociations({ userId: 1 })
+      assert.equal(res.length, 3)
+
+      res = await table.whereWithAssociations({ userId: 1, createdAfter: new Date(2001, 1, 1) })
+      assert.equal(res.length, 2)
+
+      assert.deepEqual(res.map((item) => (item.id)), [1, 2])
     })
   })
 })
