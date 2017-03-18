@@ -1,6 +1,6 @@
 const modelFactory = require('../lib/factories/model')
 const validationFactory = require('../lib/validations')
-const table = require('../../db/orm/tables/representatives')
+const table = require('../../db/orm').representatives
 
 const validations = {
   name: [

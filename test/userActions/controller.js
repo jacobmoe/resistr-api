@@ -3,7 +3,7 @@ const { assert } = require('chai')
 const controller = require('../../src/userActions/controller')
 const { truncate } = require('../helpers')
 const modelFactory = require('../../src/lib/factories/model')
-const userTable = require('../../db/orm/tables/users')
+const userTable = require('../../db/orm').users
 
 const UserAction = require('../../src/userActions/userAction')
 const Issue = require('../../src/userActions/issue')

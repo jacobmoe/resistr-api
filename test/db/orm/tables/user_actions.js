@@ -3,7 +3,7 @@ const knex = require('knex')({ client: 'pg', connection: dbConnection})
 
 const { describe, it, afterEach, beforeEach } = require('mocha')
 const { assert } = require('chai')
-const table = require('../../../../db/orm/tables/user_actions')
+const table = require('../../../../db/orm').userActions
 const { truncate } = require('../../../helpers')
 
 const clearTables = async () => {

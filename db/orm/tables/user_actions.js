@@ -1,6 +1,4 @@
-const relationshipBuilder = require('../relationships')
-
-const table = {
+const schema = {
   name: 'user_actions',
   columnMap: {
     id: 'id',
@@ -13,10 +11,14 @@ const table = {
   }
 }
 
-const relationships = relationshipBuilder(table, {
-  belongsTo: ['users', 'representatives', 'actions', 'issues']
-})
+const load = () => {
+  const relationships = require('../relationships')(schema, {
+    belongsTo: ['users', 'representatives', 'actions', 'issues']
+  })
 
-module.exports = Object.assign(require('../base')(table), {
-  whereWithAssociations: relationships.where
-})
+  return Object.assign(require('../crud')(schema), schema, {
+    whereWithAssociations: relationships.where
+  })
+}
+
+module.exports = { schema, load }

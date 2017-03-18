@@ -1,5 +1,6 @@
 const _ = require('lodash')
 const pluralize = require('pluralize')
+const tables = require('./tables')
 
 const transformer = (tableInfo) => {
   return {
@@ -30,12 +31,6 @@ const transformer = (tableInfo) => {
   }
 }
 
-const transformerForTable = (tableName) => {
-  try {
-    return transformer(require(`./tables/${tableName}`))
-  } catch (err) {}
-}
-
 /* takes something like
 *
 * userActionParams = {
@@ -61,18 +56,21 @@ function buildSearchParams(tableInfo) {
     return Object.keys(params).reduce((acc, key) => {
       if (typeof params[key] == 'object') {
         const relationTableName = pluralize.plural(key)
-        const relationTransformer = transformerForTable(relationTableName)
 
-        if (relationTransformer) {
-          const record = relationTransformer.forRecord(params[key])
+        if (tables[relationTableName]) {
+          const relationTransformer = transformer(tables[relationTableName])
 
-          let fields = Object.keys(record).reduce((recordAcc, recordKey) => {
-            recordAcc[`${relationTableName}.${recordKey}`] = record[recordKey]
+          if (relationTransformer) {
+            const record = relationTransformer.forRecord(params[key])
 
-            return recordAcc
-          }, {})
+            let fields = Object.keys(record).reduce((recordAcc, recordKey) => {
+              recordAcc[`${relationTableName}.${recordKey}`] = record[recordKey]
 
-          Object.assign(acc, fields)
+              return recordAcc
+            }, {})
+
+            Object.assign(acc, fields)
+          }
         }
       } else {
         if (tableInfo.columnMap[key]) {

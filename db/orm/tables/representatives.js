@@ -1,4 +1,4 @@
-const table = {
+const schema = {
   name: 'representatives',
   columnMap: {
     id: 'id',
@@ -10,4 +10,11 @@ const table = {
   }
 }
 
-module.exports = Object.assign(require('../base')(table), {})
+const load = () => {
+  return Object.assign(require('../crud')(schema), schema, {
+
+  })
+
+}
+
+module.exports = { schema, load }

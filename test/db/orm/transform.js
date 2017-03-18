@@ -44,7 +44,7 @@ describe('db/orm/transform', () => {
   describe('buildSearchParams', () => {
     it('transforms params for query', () => {
       const userActionTransform = transform(
-        require('../../../db/orm/tables/user_actions')
+        require('../../../db/orm/tables').user_actions
       )
 
       const params = {
@@ -66,7 +66,7 @@ describe('db/orm/transform', () => {
 
     it('skips undefined tables', () => {
       const userActionTransform = transform(
-        require('../../../db/orm/tables/user_actions')
+        require('../../../db/orm/tables').user_actions
       )
 
       const params = {

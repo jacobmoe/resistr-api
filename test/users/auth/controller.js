@@ -4,7 +4,7 @@ const config = require('config')
 const controller = require('../../../src/users/auth/controller')
 const User = require('../../../src/users/model')
 const { truncate } = require('../../helpers')
-const table = require('../../../db/orm/tables/users')
+const table = require('../../../db/orm').users
 const jwt = require('jsonwebtoken')
 
 describe('users/auth/controller', () => {

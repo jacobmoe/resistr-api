@@ -1,6 +1,6 @@
 const modelFactory = require('./model')
 const validationFactory = require('../validations')
-const table = require('../../../db/orm/tables/actions')
+const table = require('../../../db/orm').actions
 
 module.exports = (validations = {}, builder = (inst => inst)) => {
   validations = Object.assign({}, {
