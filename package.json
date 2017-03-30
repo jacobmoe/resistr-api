@@ -1,8 +1,8 @@
 {
   "name": "resistr-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "API for Resistr - a political action tracking tool",
+  "main": "server.js",
   "scripts": {
     "start": "make start",
     "test": "make test"
