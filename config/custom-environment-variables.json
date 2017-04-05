@@ -1,5 +1,4 @@
 {
-  "propublicaApiKey": "PROPUBLICA_API_KEY",
   "mapzenApiKey": "MAPZEN_API_KEY",
   "googleApiKey": "GOOGLE_API_KEY",
   "jwt": {
