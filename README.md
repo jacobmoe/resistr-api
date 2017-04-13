@@ -1,5 +1,9 @@
+# Resistr API
+
+API for https://github.com/jacobmoe/resistr
+
+![DB Diagram](https://github.com/jacobmoe/resistr-api/blob/master/docs/resistr-db-diagram.png)
+
 ## Data sources
-- [Propublica](https://propublica.github.io/congress-api-docs/?shell#congress-api-documentation)
-- [Sunlight foundation](https://sunlightfoundation.com/api/)
-- [Sunlight labs districts (maybe replaced)](https://sunlightlabs.github.io/congress/districts.html)
-- [Open States](https://blog.openstates.org/)
+- [Google Civic Information API](https://console.developers.google.com/apis/credentials)
+- [Mapzen](https://mapzen.com/dashboard)

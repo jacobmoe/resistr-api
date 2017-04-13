@@ -23,7 +23,7 @@ Issue examples:
         </size>
         <zorder>10</zorder>
         <commentTitle><![CDATA[actions and issues]]></commentTitle>
-        <labelWindowIndex><![CDATA[0]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[3]]></labelWindowIndex>
         <uid><![CDATA[3AE0F379-4C53-41F7-99C8-D5B15C9A9942]]></uid>
     </SQLComment>
     <SQLTable>
@@ -106,7 +106,7 @@ Issue examples:
             <uid><![CDATA[DDE3D235-809A-45B4-B78B-C340BA30AD87]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.698039,0.133333,0.133333,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[3]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[6]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[5807277A-FEFA-4B31-B420-1FDA08D4F6E0]]></uid>
     </SQLTable>
@@ -154,7 +154,7 @@ Issue examples:
             <uid><![CDATA[9BA8FA7C-C8BD-431E-9B70-1151404171A5]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.576471,0.439216,0.858824,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[5]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[8]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[62F8C1DC-8896-4538-90FE-B5A1692077DD]]></uid>
     </SQLTable>
@@ -217,7 +217,7 @@ Issue examples:
             <uid><![CDATA[723FF3C7-F083-4E44-978D-F0301A647732]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.803922,0.360784,0.360784,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[9]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[12]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[65182CC7-0AB0-4F40-9C13-0E58D6AE16F0]]></uid>
     </SQLTable>
@@ -260,7 +260,7 @@ Issue examples:
             <uid><![CDATA[72867A59-73BC-41FA-AA5E-106E7DDAAEB0]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.870588,0.721569,0.529412,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[7]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[10]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[677994D6-F93B-4963-840C-C7608FA5A0F0]]></uid>
     </SQLTable>
@@ -317,7 +317,7 @@ Issue examples:
             <type><![CDATA[DATE]]></type>
             <uid><![CDATA[ADB97CB2-6DD7-4400-BD06-979DA6FC2CFC]]></uid>
         </SQLField>
-        <labelWindowIndex><![CDATA[6]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[9]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[6EE4A5AF-66DF-4CB4-991B-5230862C53A2]]></uid>
     </SQLTable>
@@ -375,7 +375,7 @@ Issue examples:
             <uid><![CDATA[77518018-C0B5-4181-BFFB-8ECAB9F135DB]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.698039,0.133333,0.133333,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[0]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[2]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[8DE60B78-3C83-4561-ACCC-32A97101B454]]></uid>
     </SQLTable>
@@ -420,7 +420,7 @@ Issue examples:
             <uid><![CDATA[361B6768-8207-4B67-868F-4F20A06ACCEE]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.870588,0.721569,0.529412,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[9]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[13]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[96D6657A-0362-47E1-A345-BFA48C22A7B4]]></uid>
     </SQLTable>
@@ -437,7 +437,7 @@ Issue examples:
         </size>
         <zorder>7</zorder>
         <commentTitle><![CDATA[divisions]]></commentTitle>
-        <labelWindowIndex><![CDATA[4]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[7]]></labelWindowIndex>
         <uid><![CDATA[9874C6B9-D094-4151-9649-1B75AD0DD788]]></uid>
     </SQLComment>
     <SQLTable>
@@ -495,7 +495,7 @@ Issue examples:
             <uid><![CDATA[25726934-0266-408A-9326-335B8A6B4220]]></uid>
         </SQLField>
         <labelColor><![CDATA[{0.576471,0.439216,0.858824,1}]]></labelColor>
-        <labelWindowIndex><![CDATA[0]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[1]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[A36E2BCD-9ED7-499B-95A9-A52E5CD6011F]]></uid>
     </SQLTable>
@@ -519,8 +519,8 @@ Issue examples:
         <name><![CDATA[team_issues]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>145.00</x>
-            <y>676.00</y>
+            <x>121.00</x>
+            <y>724.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -570,7 +570,7 @@ Issue examples:
             <type><![CDATA[DATE]]></type>
             <uid><![CDATA[A09E924B-1314-415F-ABB9-DD2A1868B732]]></uid>
         </SQLField>
-        <labelWindowIndex><![CDATA[2]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[5]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[BE0A1CFD-EA2B-4BDF-BE66-D5A48CF215FD]]></uid>
     </SQLTable>
@@ -578,12 +578,12 @@ Issue examples:
         <name><![CDATA[team_actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>118.00</x>
-            <y>504.00</y>
+            <x>100.00</x>
+            <y>485.00</y>
         </location>
         <size>
             <width>200.00</width>
-            <height>120.00</height>
+            <height>160.00</height>
         </size>
         <zorder>9</zorder>
         <SQLField>
@@ -629,7 +629,17 @@ Issue examples:
             <type><![CDATA[DATE]]></type>
             <uid><![CDATA[08E1E814-8DB2-495E-B9D5-4DDFDC7E6D11]]></uid>
         </SQLField>
-        <labelWindowIndex><![CDATA[1]]></labelWindowIndex>
+        <SQLField>
+            <name><![CDATA[issue_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <uid><![CDATA[66CB45C8-E86F-49D7-97FB-914890C2E946]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[representative_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <uid><![CDATA[426346A4-1B57-47D4-9768-C287DAC28142]]></uid>
+        </SQLField>
+        <labelWindowIndex><![CDATA[4]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[E463E258-5306-4AA1-AD72-7A558A74DF5F]]></uid>
     </SQLTable>
@@ -638,7 +648,7 @@ Issue examples:
         <schema><![CDATA[]]></schema>
         <location>
             <x>78.00</x>
-            <y>139.00</y>
+            <y>138.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -666,7 +676,7 @@ Issue examples:
             <type><![CDATA[DATE]]></type>
             <uid><![CDATA[22CC01A9-0233-45DC-B909-F4040A07BD9C]]></uid>
         </SQLField>
-        <labelWindowIndex><![CDATA[8]]></labelWindowIndex>
+        <labelWindowIndex><![CDATA[11]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
         <uid><![CDATA[FCEF1C76-B3DE-4515-A4CD-355B02BD57DC]]></uid>
     </SQLTable>
@@ -689,11 +699,11 @@ Issue examples:
         <SourceSidebarWidth><![CDATA[312.000000]]></SourceSidebarWidth>
         <SQLEditorFileFormatVersion><![CDATA[3.1]]></SQLEditorFileFormatVersion>
         <uid><![CDATA[794EB00E-76FE-41D2-8B64-F534E9E35AF4]]></uid>
-        <windowHeight><![CDATA[1053.000000]]></windowHeight>
+        <windowHeight><![CDATA[1172.000000]]></windowHeight>
         <windowLocationX><![CDATA[0.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[124.000000]]></windowLocationY>
+        <windowLocationY><![CDATA[5.000000]]></windowLocationY>
         <windowScrollOrigin><![CDATA[{0, 35}]]></windowScrollOrigin>
-        <windowWidth><![CDATA[1885.000000]]></windowWidth>
+        <windowWidth><![CDATA[1920.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
     <containerName><![CDATA[model controller orginal container]]></containerName>
