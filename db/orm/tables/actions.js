@@ -10,8 +10,8 @@ const schema = {
   }
 }
 
-const load = () => { 
-  return Object.assign({}, require('../crud')(schema), schema, {
+const load = () => {
+  return require('../buildTable')(schema, {
 
   })
 }

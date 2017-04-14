@@ -34,33 +34,38 @@ module.exports = (tableInfo) => {
       })
     },
     find: (params) => {
-      return queries.where(transform.forRecord(params)).then((result) => {
-        return transform.forObject(result[0])
+      return queries.where(transform.paramsForRecord(params)).then((result) => {
+        return transform.paramsForObject(result[0])
       })
     },
     where: (params) => {
-      return queries.where(transform.forRecord(params)).then((result) => {
-        return result.map((item) => (transform.forObject(item)))
+      return queries.where(transform.paramsForRecord(params)).then((result) => {
+        return result.map((item) => (transform.paramsForObject(item)))
       })
     },
+    whereLike: (field, text) => {
+      // return queries.where(transform.paramsForRecord(params)).then((result) => {
+      //   return result.map((item) => (transform.paramsForObject(item)))
+      // })
+    },
     create: (params) => {
-      return queries.create(transform.forRecord(params))
+      return queries.create(transform.paramsForRecord(params))
         .then((result) => {
-          return transform.forObject(result[0])
+          return transform.paramsForObject(result[0])
         })
     },
     update: async (id, params) => {
       delete params.id
 
-      await queries.update(id, transform.forRecord(params))
-      const udpated = await queries.where({id: id})
+      await queries.update(id, transform.paramsForRecord(params))
+      const updated = await queries.where({id: id})
 
-      return transform.forObject(udpated[0])
+      return transform.paramsForObject(updated[0])
     },
     del: (id) => {
       return queries.del(id)
         .then((result) => {
-          return transform.forObject(result[0])
+          return transform.paramsForObject(result[0])
         })
     }
   }

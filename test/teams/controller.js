@@ -118,4 +118,35 @@ describe('teams/controller', () => {
       assert.equal(await TeamUser.count(), 0)
     })
   })
+
+  describe('index', () => {
+    beforeEach(async () => {
+      await knex('teams').insert([
+        {
+          id: 1,
+          name: 'the first team',
+          created_at: new Date()
+        },
+        {
+          id: 2,
+          name: 'the second team',
+          created_at: new Date()
+        }
+      ])
+    })
+
+    it('returns a team list', async () => {
+      let ctx = {}
+      await controller.index()(ctx)
+      assert.equal(ctx.body.results.length, 2)
+      const teamNames = ctx.body.results.map((team) => (team.name))
+      assert.include(teamNames, 'the first team')
+      assert.include(teamNames, 'the second team')
+
+      ctx = {query: {name: 'the first team'}}
+      await controller.index()(ctx)
+      assert.equal(ctx.body.results.length, 1)
+      assert.equal(ctx.body.results[0].name, 'the first team')
+    })
+  })
 })

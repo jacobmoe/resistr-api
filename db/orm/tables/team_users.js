@@ -11,7 +11,7 @@ const schema = {
 }
 
 const load = () => {
-  return Object.assign(require('../crud')(schema), schema, {
+  return require('../buildTable')(schema, {
 
   })
 }

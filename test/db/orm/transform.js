@@ -13,28 +13,28 @@ const tableInfo = {
 const transformStuff = transform(tableInfo)
 
 describe('db/orm/transform', () => {
-  describe('forObject', () => {
+  describe('paramsForObject', () => {
     it('swaps column names for attribute names', () => {
       const data = {
         first_name: 'jane',
         last_name: 'roe'
       }
 
-      assert.deepEqual(transformStuff.forObject(data), {
+      assert.deepEqual(transformStuff.paramsForObject(data), {
         firstName: 'jane',
         lastName: 'roe'
       })
     })
   })
 
-  describe('forRecord', () => {
+  describe('paramsForRecord', () => {
     it('swaps attribute names column names', () => {
       const data = {
         firstName: 'jane',
         lastName: 'roe'
       }
 
-      assert.deepEqual(transformStuff.forRecord(data), {
+      assert.deepEqual(transformStuff.paramsForRecord(data), {
         first_name: 'jane',
         last_name: 'roe'
       })

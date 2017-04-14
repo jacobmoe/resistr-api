@@ -1,13 +1,9 @@
-const buildSchema = (table) => {
-  return Object.assign({}, table.schema, {
-    columns: Object.values(table.schema.columnMap)
-  })
-}
-
 module.exports = {
-  users: buildSchema(require('./users')),
-  user_actions: buildSchema(require('./user_actions')),
-  actions: buildSchema(require('./actions')),
-  issues: buildSchema(require('./issues')),
-  representatives: buildSchema(require('./representatives'))
+  users: require('./users'),
+  user_actions: require('./user_actions'),
+  actions: require('./actions'),
+  issues: require('./issues'),
+  representatives: require('./representatives'),
+  teams: require('./teams'),
+  team_users: require('./team_users')
 }

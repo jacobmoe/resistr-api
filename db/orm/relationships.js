@@ -8,7 +8,7 @@ const buildSelects = (tableInfo, belongsToTables) => {
   const selects = belongsToTables.reduce((acc, tableName) => {
     const relationTable = tables[tableName]
 
-    relationTable.columns.forEach((column) => {
+    Object.values(relationTable.schema.columnMap).forEach((column) => {
       acc.push( `${tableName}.${column} AS ${tableName}_${column}`)
     })
 
@@ -30,7 +30,7 @@ function transformWithTableForObject(tableName, item) {
     return acc
   }, {})
 
-  return transformer(tables[tableName]).forObject(params)
+  return transformer(tables[tableName]).paramsForObject(params)
 }
 
 const joinForBelongsTo = (relation, tableInfo, relationTableName) => {
@@ -65,7 +65,7 @@ module.exports = (tableInfo, relationships) => {
       .where(transform.buildSearchParams(params))
       .then((res) => {
         return res.map((item) => {
-          const object = transform.forObject(item)
+          const object = transform.paramsForObject(item)
 
           return Object.assign({}, object, belongsToTables.reduce((acc, name) => {
             acc[pluralize.singular(name)] = transformWithTableForObject(name, item)
