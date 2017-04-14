@@ -7,6 +7,7 @@ const userRoutes = require('./users/routes')
 const userActionRoutes = require('./userActions/routes')
 const actionRoutes = require('./actions/routes')
 const issueRoutes = require('./issues/routes')
+const teamRoutes = require('./teams/routes')
 
 module.exports = function (app) {
   app.use(mount('/api/congress', congressRoutes))
@@ -17,4 +18,5 @@ module.exports = function (app) {
   app.use(mount('/api/user-actions', userActionRoutes))
   app.use(mount('/api/actions', actionRoutes))
   app.use(mount('/api/issues', issueRoutes))
+  app.use(mount('/api/teams', teamRoutes))
 }
