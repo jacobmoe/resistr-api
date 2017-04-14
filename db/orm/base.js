@@ -8,8 +8,8 @@ const queryBuilders = (tableInfo) => {
     select: () => {
       return knex(tableInfo.name).select()
     },
-    where: (params) => {
-      return knex(tableInfo.name).select().where(params)
+    where: (...args) => {
+      return knex(tableInfo.name).select().where(...args)
     },
     create: (params) => {
       return knex(tableInfo.name).insert(params, '*')
@@ -34,19 +34,25 @@ module.exports = (tableInfo) => {
       })
     },
     find: (params) => {
-      return queries.where(transform.paramsForRecord(params)).then((result) => {
+      const record = transform.paramsForRecord(params)
+
+      return queries.where(record).then((result) => {
         return transform.paramsForObject(result[0])
       })
     },
     where: (params) => {
-      return queries.where(transform.paramsForRecord(params)).then((result) => {
+      const record = transform.paramsForRecord(params)
+
+      return queries.where(record).then((result) => {
         return result.map((item) => (transform.paramsForObject(item)))
       })
     },
-    whereLike: (field, text) => {
-      // return queries.where(transform.paramsForRecord(params)).then((result) => {
-      //   return result.map((item) => (transform.paramsForObject(item)))
-      // })
+    search: (attrName, text) => {
+      const col = transform.attrNameToColName(attrName)
+
+      return queries.where(col, 'ilike', `%${text}%`).then((result) => {
+        return result.map((item) => (transform.paramsForObject(item)))
+      })
     },
     create: (params) => {
       return queries.create(transform.paramsForRecord(params))

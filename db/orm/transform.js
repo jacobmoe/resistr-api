@@ -29,6 +29,14 @@ const transformer = (tableInfo) => {
 
         return acc
       }, {})
+    },
+    colNameToAttrName: (columnName) => {
+      return _.findKey(tableInfo.columnMap, (value) => {
+        return value === columnName
+      })
+    },
+    attrNameToColName: (name) => {
+      return tableInfo.columnMap[name]
     }
   }
 }
@@ -91,6 +99,8 @@ module.exports = (tableInfo) => {
   return {
     paramsForObject: transformer(tableInfo).paramsForObject,
     paramsForRecord: transformer(tableInfo).paramsForRecord,
+    colNameToAttrName: transformer(tableInfo).colNameToAttrName,
+    attrNameToColName: transformer(tableInfo).attrNameToColName,
     buildSearchParams: buildSearchParams(tableInfo)
   }
 }

@@ -89,4 +89,42 @@ describe('db/orm/transform', () => {
       })
     })
   })
+
+  describe('colNameToAttrName', () => {
+    it('swaps column name for attribute name', () => {
+      const data = {
+        first_name: 'jane',
+        last_name: 'roe'
+      }
+
+      assert.equal(
+        transformStuff.colNameToAttrName('first_name'),
+        'firstName'
+      )
+
+      assert.equal(
+        transformStuff.colNameToAttrName('last_name'),
+        'lastName'
+      )
+    })
+  })
+
+  describe('attrNameToColName', () => {
+    it('swaps column name for attribute name', () => {
+      const data = {
+        first_name: 'jane',
+        last_name: 'roe'
+      }
+
+      assert.equal(
+        transformStuff.attrNameToColName('firstName'),
+        'first_name'
+      )
+
+      assert.equal(
+        transformStuff.attrNameToColName('lastName'),
+        'last_name'
+      )
+    })
+  })
 })
