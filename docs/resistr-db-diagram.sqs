@@ -268,12 +268,12 @@ Issue examples:
         <name><![CDATA[team_users]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>80.00</x>
-            <y>309.00</y>
+            <x>85.00</x>
+            <y>310.00</y>
         </location>
         <size>
             <width>200.00</width>
-            <height>120.00</height>
+            <height>140.00</height>
         </size>
         <zorder>4</zorder>
         <SQLField>
@@ -316,6 +316,11 @@ Issue examples:
             <name><![CDATA[updated_at]]></name>
             <type><![CDATA[DATE]]></type>
             <uid><![CDATA[ADB97CB2-6DD7-4400-BD06-979DA6FC2CFC]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[is_leader]]></name>
+            <type><![CDATA[BOOLEAN]]></type>
+            <uid><![CDATA[20CC7567-0C62-447A-A4A4-766EF151BA31]]></uid>
         </SQLField>
         <labelWindowIndex><![CDATA[9]]></labelWindowIndex>
         <ui.treeExpanded><![CDATA[1]]></ui.treeExpanded>
@@ -519,8 +524,8 @@ Issue examples:
         <name><![CDATA[team_issues]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>121.00</x>
-            <y>724.00</y>
+            <x>116.00</x>
+            <y>701.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -578,8 +583,8 @@ Issue examples:
         <name><![CDATA[team_actions]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>100.00</x>
-            <y>485.00</y>
+            <x>96.00</x>
+            <y>492.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -647,8 +652,8 @@ Issue examples:
         <name><![CDATA[teams]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>78.00</x>
-            <y>138.00</y>
+            <x>91.00</x>
+            <y>174.00</y>
         </location>
         <size>
             <width>200.00</width>
@@ -699,9 +704,9 @@ Issue examples:
         <SourceSidebarWidth><![CDATA[312.000000]]></SourceSidebarWidth>
         <SQLEditorFileFormatVersion><![CDATA[3.1]]></SQLEditorFileFormatVersion>
         <uid><![CDATA[794EB00E-76FE-41D2-8B64-F534E9E35AF4]]></uid>
-        <windowHeight><![CDATA[1172.000000]]></windowHeight>
-        <windowLocationX><![CDATA[0.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[5.000000]]></windowLocationY>
+        <windowHeight><![CDATA[1057.000000]]></windowHeight>
+        <windowLocationX><![CDATA[-1920.000000]]></windowLocationX>
+        <windowLocationY><![CDATA[120.000000]]></windowLocationY>
         <windowScrollOrigin><![CDATA[{0, 35}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1920.000000]]></windowWidth>
     </SQLDocumentInfo>
