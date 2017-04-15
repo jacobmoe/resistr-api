@@ -13,28 +13,28 @@ const tableInfo = {
 const transformStuff = transform(tableInfo)
 
 describe('db/orm/transform', () => {
-  describe('forObject', () => {
+  describe('paramsForObject', () => {
     it('swaps column names for attribute names', () => {
       const data = {
         first_name: 'jane',
         last_name: 'roe'
       }
 
-      assert.deepEqual(transformStuff.forObject(data), {
+      assert.deepEqual(transformStuff.paramsForObject(data), {
         firstName: 'jane',
         lastName: 'roe'
       })
     })
   })
 
-  describe('forRecord', () => {
+  describe('paramsForRecord', () => {
     it('swaps attribute names column names', () => {
       const data = {
         firstName: 'jane',
         lastName: 'roe'
       }
 
-      assert.deepEqual(transformStuff.forRecord(data), {
+      assert.deepEqual(transformStuff.paramsForRecord(data), {
         first_name: 'jane',
         last_name: 'roe'
       })
@@ -87,6 +87,44 @@ describe('db/orm/transform', () => {
         "representatives.office_name": "President of the United States",
         "user_actions.user_id": "1"
       })
+    })
+  })
+
+  describe('colNameToAttrName', () => {
+    it('swaps column name for attribute name', () => {
+      const data = {
+        first_name: 'jane',
+        last_name: 'roe'
+      }
+
+      assert.equal(
+        transformStuff.colNameToAttrName('first_name'),
+        'firstName'
+      )
+
+      assert.equal(
+        transformStuff.colNameToAttrName('last_name'),
+        'lastName'
+      )
+    })
+  })
+
+  describe('attrNameToColName', () => {
+    it('swaps column name for attribute name', () => {
+      const data = {
+        first_name: 'jane',
+        last_name: 'roe'
+      }
+
+      assert.equal(
+        transformStuff.attrNameToColName('firstName'),
+        'first_name'
+      )
+
+      assert.equal(
+        transformStuff.attrNameToColName('lastName'),
+        'last_name'
+      )
     })
   })
 })

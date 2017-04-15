@@ -7,11 +7,11 @@ module.exports = (table, validations = {}, instanceMethods = (inst => inst)) => 
         params = {id: params}
       }
 
-      const res = await table.find(params)
-      return res && methods.build(res)
+      const res = await table.exec(table.where(params))
+      return res && res[0] && methods.build(res[0])
     },
     where: async (params) => {
-      const res = await table.where(params)
+      const res = await table.exec(table.where(params))
       return res && res.map((item) => (methods.build(item)))
     },
     build: (params) => {
@@ -27,8 +27,8 @@ module.exports = (table, validations = {}, instanceMethods = (inst => inst)) => 
         params.createdAt = new Date()
         params.updatedAt = new Date()
 
-        const res = await table.create(params)
-        return methods.build(res)
+        const res = await table.exec(table.create(params))
+        return methods.build(res[0])
       } else {
         return Promise.reject(errors)
       }
@@ -52,13 +52,6 @@ module.exports = (table, validations = {}, instanceMethods = (inst => inst)) => 
       return methods
     }
 
-    instance.update = async (params) => {
-      params.updatedAt = new Date()
-
-      const res = await table.update(instance.id, params)
-      return methods.build(res)
-    }
-
     instance.save = async () => {
       if (instance.id) {
         return await instance.update(instance)
@@ -68,14 +61,14 @@ module.exports = (table, validations = {}, instanceMethods = (inst => inst)) => 
     }
 
     instance.del = async () => {
-      const res = await table.del(instance.id)
-      return methods.build(res)
+      const res = await table.exec(table.del(instance.id))
+      return methods.build(res[0])
     }
 
     instance.update = async (params) => {
       params.updatedAt = new Date()
-      const res = await table.update(instance.id, params)
-      return methods.build(res)
+      const res = await table.exec(table.update(instance.id, params))
+      return methods.build(res[0])
     }
 
     instance.validationErrors = async () => {

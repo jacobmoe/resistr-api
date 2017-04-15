@@ -16,7 +16,7 @@ const load = () => {
     belongsTo: ['users', 'representatives', 'actions', 'issues']
   })
 
-  return Object.assign(require('../crud')(schema), schema, {
+  return require('../buildTable')(schema, {
     whereWithAssociations: relationships.where
   })
 }

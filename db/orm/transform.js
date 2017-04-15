@@ -3,8 +3,10 @@ const pluralize = require('pluralize')
 const tables = require('./tables')
 
 const transformer = (tableInfo) => {
+  tableInfo = tableInfo.schema || tableInfo
+
   return {
-    forObject: (params) => {
+    paramsForObject: (params) => {
       if (!params) return null
 
       return Object.keys(params).reduce((acc, key) => {
@@ -17,7 +19,7 @@ const transformer = (tableInfo) => {
         return acc
       }, {})
     },
-    forRecord: (params) => {
+    paramsForRecord: (params) => {
       if (!params) return null
 
       return Object.keys(params).reduce((acc, key) => {
@@ -27,6 +29,14 @@ const transformer = (tableInfo) => {
 
         return acc
       }, {})
+    },
+    colNameToAttrName: (columnName) => {
+      return _.findKey(tableInfo.columnMap, (value) => {
+        return value === columnName
+      })
+    },
+    attrNameToColName: (name) => {
+      return tableInfo.columnMap[name]
     }
   }
 }
@@ -52,6 +62,8 @@ const transformer = (tableInfo) => {
 *  }
 */
 function buildSearchParams(tableInfo) {
+  tableInfo = tableInfo.schema || tableInfo
+
   return (params) => {
     return Object.keys(params).reduce((acc, key) => {
       if (typeof params[key] == 'object') {
@@ -61,7 +73,7 @@ function buildSearchParams(tableInfo) {
           const relationTransformer = transformer(tables[relationTableName])
 
           if (relationTransformer) {
-            const record = relationTransformer.forRecord(params[key])
+            const record = relationTransformer.paramsForRecord(params[key])
 
             let fields = Object.keys(record).reduce((recordAcc, recordKey) => {
               recordAcc[`${relationTableName}.${recordKey}`] = record[recordKey]
@@ -85,8 +97,10 @@ function buildSearchParams(tableInfo) {
 
 module.exports = (tableInfo) => {
   return {
-    forObject: transformer(tableInfo).forObject,
-    forRecord: transformer(tableInfo).forRecord,
+    paramsForObject: transformer(tableInfo).paramsForObject,
+    paramsForRecord: transformer(tableInfo).paramsForRecord,
+    colNameToAttrName: transformer(tableInfo).colNameToAttrName,
+    attrNameToColName: transformer(tableInfo).attrNameToColName,
     buildSearchParams: buildSearchParams(tableInfo)
   }
 }

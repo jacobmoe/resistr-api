@@ -191,6 +191,78 @@ ALTER SEQUENCE representatives_id_seq OWNED BY representatives.id;
 
 
 --
+-- Name: team_users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE team_users (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    user_id integer NOT NULL,
+    team_id integer NOT NULL,
+    is_leader boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE team_users OWNER TO postgres;
+
+--
+-- Name: team_users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE team_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE team_users_id_seq OWNER TO postgres;
+
+--
+-- Name: team_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE team_users_id_seq OWNED BY team_users.id;
+
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE teams (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE teams OWNER TO postgres;
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE teams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE teams_id_seq OWNER TO postgres;
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
+
+
+--
 -- Name: user_actions; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -300,6 +372,20 @@ ALTER TABLE ONLY representatives ALTER COLUMN id SET DEFAULT nextval('representa
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY team_users ALTER COLUMN id SET DEFAULT nextval('team_users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY user_actions ALTER COLUMN id SET DEFAULT nextval('user_actions_id_seq'::regclass);
 
 
@@ -351,6 +437,30 @@ ALTER TABLE ONLY representatives
 
 
 --
+-- Name: team_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY team_users
+    ADD CONSTRAINT team_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: team_users_user_id_team_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY team_users
+    ADD CONSTRAINT team_users_user_id_team_id_unique UNIQUE (user_id, team_id);
+
+
+--
+-- Name: teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_actions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -393,6 +503,27 @@ CREATE INDEX representatives_ocd_division_identifier_index ON representatives US
 --
 
 CREATE INDEX representatives_office_name_index ON representatives USING btree (office_name);
+
+
+--
+-- Name: team_users_team_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX team_users_team_id_index ON team_users USING btree (team_id);
+
+
+--
+-- Name: team_users_user_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX team_users_user_id_index ON team_users USING btree (user_id);
+
+
+--
+-- Name: teams_name_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX teams_name_index ON teams USING btree (name);
 
 
 --

@@ -1,10 +1,10 @@
 const schema = {
-  name: 'issues',
+  name: 'team_users',
   columnMap: {
     id: 'id',
-    name: 'name',
-    description: 'description',
-    iconName: 'icon_name',
+    userId: 'user_id',
+    teamId: 'team_id',
+    isLeader: 'is_leader',
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   }

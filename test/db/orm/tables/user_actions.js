@@ -151,7 +151,7 @@ describe('db/orm/tables/user_actions', () => {
         {id: 3, user_id: 1, action_id: 1, issue_id: 1, representative_id: 1, created_at: d, updated_at: d},
       ]);
 
-      const res = await table.whereWithAssociations({ userId: 1 })
+      let res = await table.whereWithAssociations({ userId: 1 })
       assert.equal(res.length, 3)
 
       res = await table.whereWithAssociations({ userId: 1, createdAfter: '2001-01-01' })
