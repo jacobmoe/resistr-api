@@ -23,91 +23,95 @@ describe('db/orm/base', () => {
     }
   }
 
-  const params = {
-    name: 'joe',
-    email: 'test@example.com',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    encryptedPassword: '123'
-  }
-
   describe('count', () => {
-    it('returns count of records in a table', (done) => {
-      base(table).count()
-        .then((res) => {
-          assert.equal(res, 0)
-        })
-        .then(() => {
-          return base(table).create(params)
-        })
-        .then(() => {
-          return base(table).count()
-        })
-        .then((res) => {
-          assert.equal(res, 1)
-        })
-        .then(() => {
-          done()
-        })
+    it('returns count of records in a table', async () => {
+      assert.equal(await base(table).count(), 0)
+
+      await knex('users').insert([
+        {
+          id: 1,
+          name: 'bill',
+          email: 'user1@email.com',
+          created_at: new Date(),
+          encrypted_password: '123'
+        },
+        {
+          id: 2,
+          name: 'jill',
+          email: 'user2@email.com',
+          created_at: new Date(),
+          encrypted_password: '123'
+        }
+      ]);
+
+      assert.equal(await base(table).count(), 2)
     })
   })
 
   describe('create', () => {
-    it('inserts a record into a given table', (done) => {
-      base(table).create(params)
-        .then((res) => {
-          assert.equal(typeof res.id, 'number')
-          assert.equal(typeof res.name, 'string')
-          assert.equal(typeof res.email, 'string')
-          assert.equal(typeof res.createdAt, 'object')
-          assert.equal(typeof res.updatedAt, 'object')
+    const params = {
+      name: 'joe',
+      email: 'test@example.com',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      encryptedPassword: '123'
+    }
 
-          done()
-        })
-    })
-  })
-
-  describe('find', () => {
-    it('returns fetches a record by id', (done) => {
+    it('inserts a record into the table', async () => {
       const baseTable = base(table)
+      assert.equal(await baseTable.count(), 0)
 
-      baseTable.create(params)
-        .then((res) => { return baseTable.find({id: res.id}) })
-        .then(res => {
-          assert.equal(res.email, params.email)
-          assert.equal(res.name, params.name)
-        })
-        .then(() => done())
+      const results = await baseTable.exec(baseTable.create(params))
+      assert.equal(await baseTable.count(), 1)
+      assert.equal(results[0].name, 'joe')
     })
   })
 
   describe('update', () => {
-    it('updates a record', (done) => {
+    it('updates a record', async () => {
+      await knex('users').insert([
+        {
+          id: 1,
+          name: 'bill',
+          email: 'user1@email.com',
+          created_at: new Date(),
+          encrypted_password: '123'
+        }
+      ]);
+
       const baseTable = base(table)
       const newParams = {name: 'bill'}
-      let id
 
-      baseTable.create(params)
-        .then((res) => { return id = res.id })
-        .then(id => {return baseTable.update(id, newParams)})
-        .then(res => { assert.equal(res.name, 'bill') })
-        .then(() => done())
+      await baseTable.exec(baseTable.update(1, newParams))
+      const results = await baseTable.exec(baseTable.where({id: 1}))
+      assert.equal(results[0].name, 'bill')
     })
   })
 
   describe('del', () => {
-    it('deletes a record', (done) => {
+    it('deletes a record', async () => {
       const baseTable = base(table)
-      let id
 
-      baseTable.create(params)
-        .then((res) => { id = res.id })
-        .then(() => { return baseTable.count() })
-        .then((count) => {assert.equal(count, 1)})
-        .then(() => {return baseTable.del(id)})
-        .then(() => { return baseTable.count() })
-        .then((count) => {assert.equal(count, 0)})
-        .then(() => done())
+      await knex('users').insert([
+        {
+          id: 1,
+          name: 'bill',
+          email: 'user1@email.com',
+          created_at: new Date(),
+          encrypted_password: '123'
+        },
+        {
+          id: 2,
+          name: 'jill',
+          email: 'user2@email.com',
+          created_at: new Date(),
+          encrypted_password: '123'
+        }
+      ]);
+
+      assert.equal(await baseTable.count(), 2)
+      await baseTable.del(1)
+      assert.equal(await baseTable.count(), 1)
     })
   })
 
@@ -140,14 +144,22 @@ describe('db/orm/base', () => {
       ]);
 
 
-      let results = await baseTable.search('email', 'user')
+      let results = await baseTable.exec(baseTable.search('email', 'user'))
       assert.equal(results.length, 3)
 
-      results = await baseTable.search('name', 'ill')
+      results = await baseTable.exec(baseTable.search('name', 'ill'))
       assert.equal(results.length, 2)
 
-      results = await baseTable.search('name', 'yo la tengo')
+      results = await baseTable.exec(baseTable.search('name', 'yo la tengo'))
       assert.equal(results.length, 1)
+      assert.deepEqual(results[0], {
+        id: 3,
+        name: 'yo la tengo',
+        email: 'user3@email.com',
+        createdAt: results[0].createdAt,
+        updatedAt: null,
+        encryptedPassword: '123'
+      })
     })
   })
 })

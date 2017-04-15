@@ -28,51 +28,36 @@ module.exports = (tableInfo) => {
   const queries = queryBuilders(tableInfo)
 
   return {
+    exec: (query) => {
+      return query.then((result) => {
+        return result.map((item) => (transform.paramsForObject(item)))
+      })
+    },
     count: () => {
       return queries.count().then((result) => {
         return result[0].count
       })
     },
-    find: (params) => {
-      const record = transform.paramsForRecord(params)
-
-      return queries.where(record).then((result) => {
-        return transform.paramsForObject(result[0])
-      })
-    },
     where: (params) => {
       const record = transform.paramsForRecord(params)
-
-      return queries.where(record).then((result) => {
-        return result.map((item) => (transform.paramsForObject(item)))
-      })
+      return queries.where(record)
     },
     search: (attrName, text) => {
       const col = transform.attrNameToColName(attrName)
 
-      return queries.where(col, 'ilike', `%${text}%`).then((result) => {
-        return result.map((item) => (transform.paramsForObject(item)))
-      })
+      return queries.where(col, 'ilike', `%${text}%`)
     },
     create: (params) => {
       return queries.create(transform.paramsForRecord(params))
-        .then((result) => {
-          return transform.paramsForObject(result[0])
-        })
     },
     update: async (id, params) => {
       delete params.id
-
       await queries.update(id, transform.paramsForRecord(params))
-      const updated = await queries.where({id: id})
 
-      return transform.paramsForObject(updated[0])
+      return queries.where({id: id})
     },
     del: (id) => {
       return queries.del(id)
-        .then((result) => {
-          return transform.paramsForObject(result[0])
-        })
     }
   }
 }
