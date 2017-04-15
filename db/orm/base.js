@@ -44,7 +44,6 @@ module.exports = (tableInfo) => {
     },
     search: (attrName, text) => {
       const col = transform.attrNameToColName(attrName)
-
       return queries.where(col, 'ilike', `%${text}%`)
     },
     create: (params) => {

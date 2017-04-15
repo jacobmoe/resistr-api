@@ -1,5 +1,5 @@
 const Team = require('./team')
-const TeamUser = require('./TeamUser')
+const TeamUser = require('./teamUser')
 
 function create () {
   return async function (ctx) {
